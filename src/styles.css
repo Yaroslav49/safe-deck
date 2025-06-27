@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* global colors */
+:root {
+   --blue: #5B7AE5;
+   --orange: #E6B05C;
+   --yellow: #E6D25C;
+
+   --dark-blue: #445bac;
+
+   --light-gray: #EEEEEE;
+
+   --main-font: 'Calibri';
+   --title-font: 'Calibri';
+}
+
+/* buttons */
+[tuiAppearance].blue-button {
+   background-color: var(--blue);
+   font-family: var(--main-font);
+   font-size: 1.15rem;
+}
+[tuiAppearance].blue-button:hover {
+   background-color: var(--dark-blue);
+}
+
+[tuiAppearance].round-button {
+   border-radius: 2em;
+   padding-left: 1.5em;
+   padding-right: 1.5em;
+}
+
+[tuiAppearance].light-button {
+   background-color: white;
+   border: 2px solid var(--blue);
+   border-radius: 1rem;
+   font-family: var(--main-font);
+   font-size: 1rem;
+   font-weight: normal;
+   color: black;
+}
+[tuiAppearance].light-button:hover {
+   background-color: var(--blue);
+   color: white;
+}
