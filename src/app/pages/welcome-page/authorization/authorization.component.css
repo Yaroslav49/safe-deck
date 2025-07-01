@@ -13,7 +13,7 @@
 /* inputs */
 .input {
    font-family: var(--main-font);
-   font-size: 1.15rem;
+   font-size: var(--normal-font-size);
    border-radius: 10px;
    border: 1px solid black;
    padding: 1em;
@@ -40,12 +40,12 @@ input.ng-touched.ng-invalid {
 
 .main-text {
    font-family: var(--main-font);
-   font-size: 1.15rem;
+   font-size: var(--normal-font-size);
 }
 
 .link {
    font-family: var(--main-font);
-   font-size: 1.15rem;
+   font-size: var(--normal-font-size);
    font-weight: bold;
    color: var(--blue);
    text-decoration: none;
@@ -57,7 +57,7 @@ input.ng-touched.ng-invalid {
 
 .alert {
    font-family: var(--main-font);
-   font-size: 1.15rem;
+   font-size: var(--normal-font-size);
    margin-top: -0.8em;
    padding-left: 2em;
    color: red;
@@ -67,7 +67,7 @@ input.ng-touched.ng-invalid {
 
 .error {
    font-family: var(--main-font);
-   font-size: 1.15rem;
+   font-size: var(--normal-font-size);
    color: red;
    width: 100%;
    text-align: left;
