@@ -8,16 +8,40 @@
    --dark-blue: #445bac;
 
    --light-gray: #EEEEEE;
+   --shadow-gray: rgba(0,0,0,0.2);
+   --middle-gray: #7D7D7D;
+   --dark-gray: #27292A;
 
    --main-font: 'Calibri';
    --title-font: 'Calibri';
+
+   --normal-font-size: 1.15rem;
+}
+
+.main-page {
+   background-color: var(--light-gray);
+   width: 100%;
+   height: 100vh;
+}
+
+.main-page-header {
+   background-color: #27292ae3;
+   padding: 1rem;
+   border-left: 1px solid var(--middle-gray);
+   width: calc(100% - 2rem);
+}
+
+.cloud {
+   background-color: white;
+   border-radius: 20px;
+   box-shadow: 0 0 10px var(--shadow-gray);
 }
 
 /* buttons */
 [tuiAppearance].blue-button {
    background-color: var(--blue);
    font-family: var(--main-font);
-   font-size: 1.15rem;
+   font-size: var(--normal-font-size);
 }
 [tuiAppearance].blue-button:hover {
    background-color: var(--dark-blue);
@@ -33,8 +57,8 @@
    background-color: white;
    border: 2px solid var(--blue);
    border-radius: 1rem;
-   font-family: var(--main-font);
-   font-size: 1rem;
+   font: var(--main-font);
+   font-size: var(--normal-font-size);
    font-weight: normal;
    color: black;
 }

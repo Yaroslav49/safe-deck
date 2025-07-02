@@ -11,4 +11,8 @@ import { DialogAuthorizationService } from '../../welcome-page/authorization/dia
 })
 export class HeaderComponent {
    public constructor(protected dialogAuthService: DialogAuthorizationService) { }
+
+   scrollToFunctions() {
+      document.getElementById('functions')?.scrollIntoView({behavior: 'smooth'});
+   }
 }
