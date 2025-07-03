@@ -55,4 +55,24 @@ export class AuthorizationService {
       this.isLoggedIn = false;
    }
 
+   register(login: string, password: string, publicName: string): Observable<number> {
+      var body = { email: login, password, publicName };
+      return this.http.post<any>('http://localhost:8080/auth/register', body)
+         .pipe(
+            map(response => {
+               localStorage.setItem('jwt', response.token);
+               let decoded = Object(jwtDecode(response.token));
+               console.log(decoded);
+               this.loginName = decoded.sub ? decoded.sub : '';
+               this.role = decoded.role ? decoded.role : '';
+               this.isLoggedIn = true;
+               return 200;
+            }),
+            catchError(response => {
+               this.isLoggedIn = false;
+               return of(response.status);              
+            })
+         );
+   }
+
 }

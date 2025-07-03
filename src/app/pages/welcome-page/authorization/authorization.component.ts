@@ -4,6 +4,7 @@ import { TuiButton, TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
 import { Router } from '@angular/router';
+import { DialogAuthorizationService } from '../dialog-authorization/dialog-authorization.service';
 
 @Component({
   selector: 'app-authorization',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class AuthorizationComponent {
    private readonly authService = inject(AuthorizationService);
+   private readonly dialogAuthService = inject(DialogAuthorizationService);
    private readonly router = inject(Router);
 
    authForm: FormGroup = new FormGroup({
@@ -24,6 +26,11 @@ export class AuthorizationComponent {
    readonly context = injectContext<TuiDialogContext<void,void>>();
 
    constructor() { }
+
+   protected showRegistrationDialog():void {
+      this.context.completeWith();
+      this.dialogAuthService.showRegisterDialog();
+   }
 
    protected onSubmit():void {
       this.authService.login(
@@ -44,9 +51,5 @@ export class AuthorizationComponent {
             }
          }
       });
-   }
-
-   protected isAuthenticated(): boolean {
-      return this.authService.isAuthenticated();
    }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TuiButton } from '@taiga-ui/core';
-import { DialogAuthorizationService } from '../../welcome-page/authorization/dialog-authorization.service';
+import { DialogAuthorizationService } from '../../welcome-page/dialog-authorization/dialog-authorization.service';
 
 @Component({
   selector: 'header',
