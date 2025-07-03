@@ -4,23 +4,25 @@ import { Observable } from "rxjs";
 import { jwtDecode } from 'jwt-decode';
 import { Router } from "@angular/router";
 import { AuthorizationService } from "./authorization.service";
-import { Role } from "./role.model";
+import { Role } from "../../shared/model/role.model";
 
 // Перехватывает http-запросы и добавляет к ним токен авторизации
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
+   private readonly authService: AuthorizationService = inject(AuthorizationService);
+   private readonly router: Router = inject(Router);
+
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       const token = localStorage.getItem('jwt');
-      const authService: AuthorizationService = inject(AuthorizationService);
       if (token) {
          let decoded = Object(jwtDecode(token));
          let nowSeconds = new Date().getTime() / 1000;
          console.log(`секунд до сброса jwt: ${decoded.exp - nowSeconds}`);
          if (nowSeconds >= decoded.exp) { // сбрасываем невалидный jwt
             localStorage.removeItem('jwt');
-            authService.isLoggedIn = false;
-            authService.role = Role.GUEST;
-            inject(Router).navigate(['']);
+            this.authService.isLoggedIn = false;
+            this.authService.role = Role.GUEST;
+            this.router.navigate(['']);
             return next.handle(req);
          }
          const authReq = req.clone({

@@ -1,10 +1,10 @@
 import { Component, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MainMenuComponent } from "../shared/main-menu/main-menu.component";
-import { Board } from '../shared/model/board.model';
+import { Board } from '../../shared/model/board.model';
 import { BoardInfoComponent } from './board-info/board-info.component';
 import { BoardService } from '../../services/board-service/board.service';
 import { TuiIcon, TuiScrollbar } from '@taiga-ui/core';
-import { BoardResponce } from '../../services/board-service/board-responce.model';
+import { BoardResponce } from '../../shared/model/board-responce.model';
 
 @Component({
   selector: 'boards-page',
@@ -13,19 +13,15 @@ import { BoardResponce } from '../../services/board-service/board-responce.model
   styleUrl: './boards-page.component.css'
 })
 export class BoardsPageComponent {
-   protected boards: Board[] = [
-      {boardId: 1, boardName: "Компания 1"},
-      {boardId: 2, boardName: "Компания 2"},
-      {boardId: 3, boardName: "Компания 3 с длинным названием"},
-   ];
+   private readonly boardService = inject(BoardService);
+   
+   protected boards: Board[] = [];
 
    @ViewChild(MainMenuComponent, {static: false})
    protected mainMenuComponent!: MainMenuComponent;
 
    @ViewChildren(BoardInfoComponent)
    protected boardsElements!: QueryList<BoardInfoComponent>;
-
-   private boardService = inject(BoardService);
 
    constructor() {
       this.updateBoards();

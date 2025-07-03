@@ -1,0 +1,57 @@
+.profile-bg {
+   padding: 1.5rem;
+   margin: 1.5rem;
+
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: flex-start;
+   gap: 1.5rem;
+}
+
+.horizontal-list {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: flex-start;
+}
+
+.horizontal-center-list {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   gap: 1rem;
+}
+
+.vertical-list {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: flex-start;
+}
+
+/* texts */
+
+.title {
+   color: white;
+   font-family: var(--main-font);
+   font-size: var(--normal-font-size);
+   margin-left: 0.5rem;
+}
+
+.title-profile {
+   color: black;
+   font-family: var(--main-font);
+   font-size: 1.25rem;
+}
+
+.text {
+   color: black;
+   font-family: var(--main-font);
+   font-size: 1rem;
+}
+
+[tuiAppearance].auth-button {
+   font-weight: normal;
+}

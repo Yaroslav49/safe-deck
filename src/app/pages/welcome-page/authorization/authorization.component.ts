@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrl: './authorization.component.css'
 })
 export class AuthorizationComponent {
+   private readonly authService = inject(AuthorizationService);
+   private readonly router = inject(Router);
+
    authForm: FormGroup = new FormGroup({
       login: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -19,9 +22,6 @@ export class AuthorizationComponent {
    authError: boolean = false;
 
    readonly context = injectContext<TuiDialogContext<void,void>>();
-
-   private authService = inject(AuthorizationService);
-   private router = inject(Router);
 
    constructor() { }
 

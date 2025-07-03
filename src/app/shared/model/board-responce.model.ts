@@ -1,4 +1,4 @@
-import { Board } from "../../pages/shared/model/board.model";
+import { Board } from "./board.model";
 
 export interface BoardResponce {
    status: string;

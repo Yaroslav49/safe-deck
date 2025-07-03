@@ -1,13 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Board } from "../../pages/shared/model/board.model";
+import { Board } from "../../shared/model/board.model";
 import { map } from "rxjs/internal/operators/map";
 import { catchError, Observable, of } from "rxjs";
-import { BoardResponce } from "./board-responce.model";
+import { BoardResponce } from "../../shared/model/board-responce.model";
 
 @Injectable({ providedIn: 'root' })
 export class BoardService {
-   private http = inject(HttpClient);
+   private readonly http = inject(HttpClient);
 
    public getUserBoards(): Observable<Board[]>  {
       return this.http.get("http://localhost:8080/boards").pipe(map((data: any) => data));

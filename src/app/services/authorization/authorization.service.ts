@@ -2,15 +2,15 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { catchError, map, Observable, of } from "rxjs";
 import { jwtDecode } from 'jwt-decode';
-import { Role } from "./role.model";
+import { Role } from "../../shared/model/role.model";
 
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {
+   private readonly http = inject(HttpClient);
+   
    isLoggedIn: boolean;
    loginName: string = '';
    role: Role = Role.GUEST;
-
-   private http = inject(HttpClient);
 
    constructor() {
       var token = localStorage.getItem('jwt');

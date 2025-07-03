@@ -1,8 +1,8 @@
 import { Component, ElementRef, inject, input, output, ViewChild } from '@angular/core';
-import { Board } from '../../shared/model/board.model';
+import { Board } from '../../../shared/model/board.model';
 import { TuiButton, TuiDialogService, TuiIcon } from '@taiga-ui/core';
 import { BoardService } from '../../../services/board-service/board.service';
-import { BoardResponce } from '../../../services/board-service/board-responce.model';
+import { BoardResponce } from '../../../shared/model/board-responce.model';
 import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { switchMap } from 'rxjs';
 
@@ -13,6 +13,9 @@ import { switchMap } from 'rxjs';
    styleUrl: './board-info.component.css'
 })
 export class BoardInfoComponent {
+   private readonly boardService = inject(BoardService);
+   private readonly dialogs = inject(TuiDialogService);
+
    board = input.required<Board>();
 
    @ViewChild("boardInput", { static: false })
@@ -21,9 +24,6 @@ export class BoardInfoComponent {
    updateBoards = output<void>();
 
    protected isNameEdited: boolean = false;
-
-   private boardService = inject(BoardService);
-   private readonly dialogs = inject(TuiDialogService);
 
    public startEdit() {
       this.isNameEdited = true;
