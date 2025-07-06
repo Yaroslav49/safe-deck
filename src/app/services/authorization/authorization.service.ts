@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { catchError, map, Observable, of } from "rxjs";
 import { jwtDecode } from 'jwt-decode';
-import { Role } from "../../shared/model/role.model";
+import { Role } from "../../shared/model/role.enum";
 
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {

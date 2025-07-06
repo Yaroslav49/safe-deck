@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { TuiButton, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
 import {TuiAvatar} from '@taiga-ui/kit';
-import { Board } from '../../../shared/model/board.model';
+import { Board } from '../../../shared/model/boards/board.model';
 import { BoardService } from '../../../services/board-service/board.service';
 import { RouterLink } from '@angular/router';
+import { ColorService } from '../../../services/color-service/color.service';
 
 @Component({
   selector: 'main-menu',
@@ -13,11 +14,10 @@ import { RouterLink } from '@angular/router';
 })
 export class MainMenuComponent {
    private readonly boardService = inject(BoardService);
+   private readonly colorService = inject(ColorService);
    
    protected userName: string = "Ярослав Зверев";
    protected boards: Board[] = [];
-
-   private colors: string[] = ["#5B7AE5", "#E6B05C", "#D6BD2D"];
 
    constructor() {
       this.updateBoards();
@@ -28,7 +28,7 @@ export class MainMenuComponent {
    }
 
    protected getAvatarColor(): string {
-      return this.colors[this.userName.charCodeAt(0) % this.colors.length];
+      return this.colorService.getAccentColor(this.userName.charCodeAt(0));
    }
 
    public updateBoards() {

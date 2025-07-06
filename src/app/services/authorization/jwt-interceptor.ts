@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { jwtDecode } from 'jwt-decode';
 import { Router } from "@angular/router";
 import { AuthorizationService } from "./authorization.service";
-import { Role } from "../../shared/model/role.model";
+import { Role } from "../../shared/model/role.enum";
 
 // Перехватывает http-запросы и добавляет к ним токен авторизации
 @Injectable()

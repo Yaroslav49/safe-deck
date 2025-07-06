@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Board } from "../../shared/model/board.model";
+import { Board } from "../../shared/model/boards/board.model";
 import { map } from "rxjs/internal/operators/map";
 import { catchError, Observable, of } from "rxjs";
-import { BoardResponce } from "../../shared/model/board-responce.model";
+import { BoardResponce } from "../../shared/model/boards/board-responce.model";
 
 @Injectable({ providedIn: 'root' })
 export class BoardService {

@@ -1,8 +1,8 @@
 import { Component, ElementRef, inject, input, output, ViewChild } from '@angular/core';
-import { Board } from '../../../shared/model/board.model';
+import { Board } from '../../../shared/model/boards/board.model';
 import { TuiButton, TuiDialogService, TuiIcon } from '@taiga-ui/core';
 import { BoardService } from '../../../services/board-service/board.service';
-import { BoardResponce } from '../../../shared/model/board-responce.model';
+import { BoardResponce } from '../../../shared/model/boards/board-responce.model';
 import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { switchMap } from 'rxjs';
 

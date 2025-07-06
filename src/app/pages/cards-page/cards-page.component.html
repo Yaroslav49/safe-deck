@@ -1,0 +1,28 @@
+<div class="horizontal-list">
+   <main-menu></main-menu>
+
+   <div class="vertical-list main-page">
+      <div class="main-page-header header-group">
+         <a class="title-link">Журнал просмотров</a>
+         <a class="title-link">Роли</a>
+         <a class="title-link">Пользователи</a>
+      </div>
+
+      <tui-scrollbar class="box">
+         <div class="vertical-list gap page-padding">
+            <a class="link">
+               <tui-icon icon="circle-plus" class="icon"></tui-icon>
+               Добавить карточку
+            </a>
+
+            <div class="cards-list">
+               @for (card of cards; track card.cardId) {
+                  <card [card]="card" [boardId]="boardId" (updateCards)="updateCards()"></card>
+               }
+            </div>
+            
+         </div>     
+      </tui-scrollbar>
+      
+   </div>
+</div>

@@ -27,8 +27,9 @@
 .main-page-header {
    background-color: #27292ae3;
    padding: 1rem;
+   padding-left: 2rem;
    border-left: 1px solid var(--middle-gray);
-   width: calc(100% - 2rem);
+   width: calc(100% - 3rem);
 }
 
 .cloud {
@@ -65,4 +66,16 @@
 [tuiAppearance].light-button:hover {
    background-color: var(--blue);
    color: white;
+}
+
+[tuiAppearance].gray-button {
+   background-color: #ffffff;
+   box-shadow: 0 1px 1px var(--shadow-gray);;
+   font: var(--main-font);
+   font-size: var(--normal-font-size);
+   font-weight: normal;
+   color: black;
+}
+[tuiAppearance].gray-button:hover {
+   background-color: #ededed;
 }

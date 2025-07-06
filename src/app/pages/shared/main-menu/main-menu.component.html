@@ -45,7 +45,7 @@
          </button>
 
          @for(board of boards; track board.boardId) {
-            <button tuiButton size="s" class="line-button left-indent">
+            <button tuiButton size="s" class="line-button left-indent" routerLink="/cards/{{board.boardId}}">
                <span class="text"> {{board.boardName}} </span>
             </button>
          }
