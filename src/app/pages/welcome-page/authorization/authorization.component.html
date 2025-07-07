@@ -9,7 +9,7 @@
    @if(authForm.controls["password"].invalid && authForm.controls["password"].touched){
       <span class="alert">Введите пароль</span>
    }
-   <span id="error" class="error"></span>
+   <span class="error"> {{ error() }} </span>
    <br>
 
    <button tuiButton class="blue-button full-width-button" type="submit" [disabled]="authForm.invalid"

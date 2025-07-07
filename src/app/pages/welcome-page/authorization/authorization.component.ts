@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiButton, TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
@@ -10,22 +10,21 @@ import { DialogAuthorizationService } from '../dialog-authorization/dialog-autho
   selector: 'app-authorization',
   imports: [TuiButton, ReactiveFormsModule],
   templateUrl: './authorization.component.html',
-  styleUrl: './authorization.component.css'
+  styleUrl: './authorization.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthorizationComponent {
    private readonly authService = inject(AuthorizationService);
    private readonly dialogAuthService = inject(DialogAuthorizationService);
    private readonly router = inject(Router);
+   readonly context = injectContext<TuiDialogContext<void,void>>();
 
-   authForm: FormGroup = new FormGroup({
+   protected authForm: FormGroup = new FormGroup({
       login: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
    })
-   authError: boolean = false;
 
-   readonly context = injectContext<TuiDialogContext<void,void>>();
-
-   constructor() { }
+   protected error = signal<string>('');
 
    protected showRegistrationDialog():void {
       this.context.completeWith();
@@ -35,21 +34,16 @@ export class AuthorizationComponent {
    protected onSubmit():void {
       this.authService.login(
          this.authForm.controls['login'].value, this.authForm.controls['password'].value
-      ).subscribe({
-         next: (result: boolean) => {
+      ).subscribe(
+         (result: boolean) => {
             if (result) {
-               this.authError = false;
+               this.error.set('');
                this.router.navigate(['/boards']);
                this.context.completeWith();
             } else {
-               this.authError = true;
-               let errorMessage: HTMLElement | null = document.getElementById('error');
-               if (errorMessage) {
-                  errorMessage.textContent = 'Ошибка: аккаунт с таким логином и паролем не найден';
-               }            
-               console.log('authError!');
+               this.error.set('Ошибка: аккаунт с таким логином и паролем не найден');
             }
          }
-      });
+      );
    }
 }

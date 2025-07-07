@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiButton } from '@taiga-ui/core';
@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
   selector: 'app-profile',
   imports: [MainMenuComponent, TuiAvatar, TuiButton],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent {
    private readonly authService = inject(AuthorizationService);

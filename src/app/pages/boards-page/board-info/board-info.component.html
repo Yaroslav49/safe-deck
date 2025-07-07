@@ -1,11 +1,12 @@
 <div class="cloud board-bg vertical-list">
-   @if (isNameEdited) {
+   @if (isNameEdited()) {
       <input
-         #boardInput
+         tuiAutoFocus
          type="text" class="board-name input"
-         (keyup.enter)="editName()"
+         [formControl]="boardName"
+         (keydown.enter.prevent)="editName()"
          (blur)="cancelEdit()"
-         [value]="board().boardName"
+         (focus)="selectInputText($event)"
       >
    }
    @else {

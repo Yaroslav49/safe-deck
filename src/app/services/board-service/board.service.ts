@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import { inject, Injectable, signal } from "@angular/core";
 import { Board } from "../../shared/model/boards/board.model";
 import { map } from "rxjs/internal/operators/map";
 import { catchError, Observable, of } from "rxjs";
@@ -9,7 +9,19 @@ import { BoardResponce } from "../../shared/model/boards/board-responce.model";
 export class BoardService {
    private readonly http = inject(HttpClient);
 
-   public getUserBoards(): Observable<Board[]>  {
+   private boardsSignal = signal<Board[]>([]);
+
+   public updateUserBoards() {
+      this.getUserBoards().subscribe(
+         boards => this.boardsSignal.set(boards)
+      )
+   }
+
+   public getBoards() {
+      return this.boardsSignal;
+   }
+
+   private getUserBoards(): Observable<Board[]>  {
       return this.http.get("http://localhost:8080/boards").pipe(map((data: any) => data));
    }
 

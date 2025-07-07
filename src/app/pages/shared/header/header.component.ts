@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TuiButton } from '@taiga-ui/core';
 import { DialogAuthorizationService } from '../../welcome-page/dialog-authorization/dialog-authorization.service';
@@ -7,10 +7,11 @@ import { DialogAuthorizationService } from '../../welcome-page/dialog-authorizat
   selector: 'header',
   imports: [RouterLink, TuiButton],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-   public constructor(protected dialogAuthService: DialogAuthorizationService) { }
+   protected dialogAuthService = inject(DialogAuthorizationService);
 
    scrollToFunctions() {
       document.getElementById('functions')?.scrollIntoView({behavior: 'smooth'});

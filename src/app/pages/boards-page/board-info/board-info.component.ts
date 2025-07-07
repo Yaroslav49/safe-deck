@@ -1,16 +1,18 @@
-import { Component, ElementRef, inject, input, output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output, signal, ViewChild } from '@angular/core';
 import { Board } from '../../../shared/model/boards/board.model';
 import { TuiButton, TuiDialogService, TuiIcon } from '@taiga-ui/core';
 import { BoardService } from '../../../services/board-service/board.service';
 import { BoardResponce } from '../../../shared/model/boards/board-responce.model';
 import { TUI_CONFIRM } from '@taiga-ui/kit';
-import { switchMap } from 'rxjs';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {TuiAutoFocus} from '@taiga-ui/cdk';
 
 @Component({
    selector: 'board-info',
-   imports: [TuiIcon, TuiButton],
+   imports: [TuiIcon, TuiButton, TuiAutoFocus, ReactiveFormsModule],
    templateUrl: './board-info.component.html',
-   styleUrl: './board-info.component.css'
+   styleUrl: './board-info.component.css',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoardInfoComponent {
    private readonly boardService = inject(BoardService);
@@ -18,42 +20,41 @@ export class BoardInfoComponent {
 
    board = input.required<Board>();
 
-   @ViewChild("boardInput", { static: false })
-   boardInput!: ElementRef;
+   protected boardName = new FormControl('');
 
-   updateBoards = output<void>();
-
-   protected isNameEdited: boolean = false;
+   protected isNameEdited = signal<boolean>(false);
 
    public startEdit() {
-      this.isNameEdited = true;
-      setTimeout(() => {
-         this.boardInput.nativeElement.focus();
-         console.log('focus!');
-      });
+      this.isNameEdited.set(true);
+      this.boardName.setValue(this.board().boardName);
    }
 
    protected cancelEdit() {
-      this.isNameEdited = false;
+      this.isNameEdited.set(false);
    }
 
    protected editName() {
       const boardId: number = this.board().boardId || -1;
-      const newBoardName: string = this.boardInput.nativeElement.value || '';
+      const newBoardName: string = this.boardName.value || '';
       console.log(`edit name: id = ${boardId}, name = ${newBoardName}`);
       if (boardId >= 0 && newBoardName.trim() != '') {
          this.boardService.renameBoard(boardId, newBoardName)
-            .subscribe({
-               next: (result: BoardResponce) => {
+            .subscribe(
+               (result: BoardResponce) => {
                   if (result.status == 'ok') {
-                     this.updateBoards.emit();
+                     this.boardService.updateUserBoards();
                   } else {
                      // здесь будет вывод ошибок пользователю
                   }
                }
-            })
+            )
       }
-      this.isNameEdited = false;
+      this.isNameEdited.set(false);
+   }
+
+   protected selectInputText(event: FocusEvent) {
+      const input = event.target as HTMLInputElement;
+      input?.select();
    }
 
    protected confirmDeleteBoard() {
@@ -78,13 +79,13 @@ export class BoardInfoComponent {
       const boardId: number = this.board().boardId || -1;
       if (boardId >= 0) {
          this.boardService.deleteBoard(boardId)
-            .subscribe({
-               next: (result: string) => {
+            .subscribe(
+               (result: string) => {
                   if (result == 'ok') {
-                     this.updateBoards.emit();
+                     this.boardService.updateUserBoards();
                   }
                }
-            })
+            )
       }
    }
 }

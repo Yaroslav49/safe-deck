@@ -41,10 +41,10 @@
    <tui-scrollbar class="box">
       <div class="vertical-list">
          <button tuiButton size="s" class="line-button" routerLink="/boards">
-            <span class="text">Доступные компании</span>
+            <span class="text">Доступные проекты</span>
          </button>
 
-         @for(board of boards; track board.boardId) {
+         @for(board of boards(); track board.boardId) {
             <button tuiButton size="s" class="line-button left-indent" routerLink="/cards/{{board.boardId}}">
                <span class="text"> {{board.boardName}} </span>
             </button>

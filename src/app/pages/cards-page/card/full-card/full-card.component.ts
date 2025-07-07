@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
@@ -7,7 +7,8 @@ import { injectContext } from '@taiga-ui/polymorpheus';
   selector: 'full-card',
   imports: [],
   templateUrl: './full-card.component.html',
-  styleUrl: './full-card.component.css'
+  styleUrl: './full-card.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FullCardComponent {
    cardForm: FormGroup = new FormGroup({

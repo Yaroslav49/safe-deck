@@ -1,16 +1,29 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import { inject, Injectable, signal } from "@angular/core";
 import { catchError, map, Observable, of } from "rxjs";
 import { AccessibleCards } from "../../shared/model/cards/accessible-cards.model";
 import { CardResponce } from "../../shared/model/cards/card-responce.model";
 import { Card } from "../../shared/model/cards/card.model";
 import { UniversalResponce } from "../../shared/model/universal-responce.model";
+import { AccessLevel } from "../../shared/model/cards/access-level.enum";
 
 @Injectable({ providedIn: 'root' })
 export class CardService {
    private readonly http = inject(HttpClient);
+   private accessibleCardsSignal = signal<AccessibleCards>({accessibleCards: [], accessLevel: AccessLevel.GUEST});
 
-   public getAccessibleCards(boardId: number): Observable<AccessibleCards> {
+   public getAccessibleCardsSignal() {
+      return this.accessibleCardsSignal;
+   }
+
+   public updateAccesibleCards(boardId: number) {
+      this.getAccessibleCards(boardId).subscribe({
+         next: accessibleCards => this.accessibleCardsSignal.set(accessibleCards),
+         error: error => this.accessibleCardsSignal.set({accessibleCards: [], accessLevel: AccessLevel.GUEST})
+      })
+   }
+
+   private getAccessibleCards(boardId: number): Observable<AccessibleCards> {
       return this.http.get(`http://localhost:8080/cards/${boardId}`).pipe(map((data: any) => data));
    }
 

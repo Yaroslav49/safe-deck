@@ -1,4 +1,4 @@
-import { Component, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MainMenuComponent } from "../shared/main-menu/main-menu.component";
 import { Board } from '../../shared/model/boards/board.model';
 import { BoardInfoComponent } from './board-info/board-info.component';
@@ -10,58 +10,35 @@ import { BoardResponce } from '../../shared/model/boards/board-responce.model';
   selector: 'boards-page',
   imports: [MainMenuComponent, BoardInfoComponent, TuiIcon, TuiScrollbar],
   templateUrl: './boards-page.component.html',
-  styleUrl: './boards-page.component.css'
+  styleUrl: './boards-page.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoardsPageComponent {
    private readonly boardService = inject(BoardService);
    
-   protected boards: Board[] = [];
-
-   @ViewChild(MainMenuComponent, {static: false})
-   protected mainMenuComponent!: MainMenuComponent;
+   protected boards = this.boardService.getBoards();
 
    @ViewChildren(BoardInfoComponent)
    protected boardsElements!: QueryList<BoardInfoComponent>;
 
-   constructor() {
-      this.updateBoards();
-   }
-
    protected createBoard() {
-      const boardName: string = `Компания ${this.boards.length + 1}`;
-      this.boardService.createBoard(boardName).subscribe({
-         next: (result: BoardResponce) => {
-            console.log(result);
-            // обновляем boards с сервера каждый чих, потому что у доски может быть много редакторов
-            this.updateBoards();
-            this.mainMenuComponent?.updateBoards();
+      const boardName: string = `Проект ${this.boards().length + 1}`;
+      this.boardService.createBoard(boardName).subscribe(
+         (result: BoardResponce) => {
+            this.boardService.updateUserBoards();
+            
             // выделяем созданный board для редактирования
             if (result.status == 'ok') {
-               console.log('status == ok');
                setTimeout(() => {
                   var elem = this.boardsElements.find(
                      boardsElement => boardsElement.board()?.boardId == result?.board?.boardId
                   );
-                  console.log('elem = ');
-                  console.log(elem);
+                  //console.log(`elem.id = ${elem?.board()?.boardId}, result.board.id = ${result?.board?.boardId}`);
                   elem?.startEdit();
                }, 100);
             }
             
          }
-      })
-   }
-
-   protected updateBoardsAnywhere() {
-      this.updateBoards();
-      this.mainMenuComponent?.updateBoards();
-   }
-
-   private updateBoards() {
-      this.boardService.getUserBoards().subscribe({
-         next: (boards: Board[]) => {
-            this.boards = boards;
-         }
-      })
+      )
    }
 }

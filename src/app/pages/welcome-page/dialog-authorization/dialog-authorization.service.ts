@@ -15,8 +15,6 @@ export class DialogAuthorizationService {
       size: 's',
    });
 
-   public constructor() { }
-
    public showAuthDialog(): void {
       this.authDialog().subscribe();
    }

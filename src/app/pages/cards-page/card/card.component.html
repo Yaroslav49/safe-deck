@@ -4,13 +4,14 @@
    [style.background-color]="getBackgroundColor()"
 >
    <div class="horizontal-list">
-      @if (isNameEdited) {
+      @if (isNameEdited()) {
          <input
-         #nameInput
+         tuiAutoFocus
          type="text" class="title input"
          (keyup.enter)="editName()"
          (blur)="cancelEdit()"
-         [value]="card().cardName">
+         (focus)="selectInputText($event)"
+         [formControl]="cardName">
       }
       @else {
          <span class="title" (dblclick)="startEditName()"> {{card().cardName}} </span>
@@ -19,17 +20,18 @@
       <card-menu (selectMenuOption)="selectMenuOption($event)"></card-menu>
    </div>
    
-   @if (isDescriptionEdited) {
+   @if (isDescriptionEdited()) {
       <input
-      #descriptionInput
+      tuiAutoFocus
       type="text" class="text input"
       (keyup.enter)="editDescription()"
       (blur)="cancelEditDescription()"
-      [value]="card().cardDescription">
+      (focus)="selectInputText($event)"
+      [formControl]="cardDescription">
    }
    @else {
       <span class="text" (dblclick)="startEditDescription()"> {{card().cardDescription}} </span>
    }
 
-   <button tuiButton size="m" class="gray-button normal-font-weight">Показать пароль</button>
+   <button tuiButton size="m" class="gray-button normal-font-weight">Показать данные</button>
 </div>

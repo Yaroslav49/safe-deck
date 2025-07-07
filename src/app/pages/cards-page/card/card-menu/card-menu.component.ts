@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 import { TuiActiveZone } from '@taiga-ui/cdk/directives/active-zone';
 import { TuiObscured } from '@taiga-ui/cdk/directives/obscured';
 import { TuiIcon, TuiDropdown, TuiButton } from '@taiga-ui/core';
@@ -7,7 +7,8 @@ import { TuiIcon, TuiDropdown, TuiButton } from '@taiga-ui/core';
    selector: 'card-menu',
    imports: [TuiIcon, TuiButton, TuiDropdown, TuiActiveZone, TuiObscured],
    templateUrl: './card-menu.component.html',
-   styleUrl: './card-menu.component.css'
+   styleUrl: './card-menu.component.css',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardMenuComponent {
    selectMenuOption = output<number>();

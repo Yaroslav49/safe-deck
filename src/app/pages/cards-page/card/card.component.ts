@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, input, output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output, signal, ViewChild } from '@angular/core';
 import { Card } from '../../../shared/model/cards/card.model';
 import { TuiButton, TuiDialogService, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { ColorService } from '../../../services/color-service/color.service';
@@ -7,12 +7,15 @@ import { CardResponce } from '../../../shared/model/cards/card-responce.model';
 import { CardMenuComponent } from './card-menu/card-menu.component';
 import { UniversalResponce } from '../../../shared/model/universal-responce.model';
 import { TUI_CONFIRM } from '@taiga-ui/kit';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TuiAutoFocus } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'card',
-  imports: [TuiButton, CardMenuComponent],
+  imports: [TuiButton, CardMenuComponent, TuiAutoFocus, ReactiveFormsModule],
   templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  styleUrl: './card.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent {
    private readonly colorService = inject(ColorService);
@@ -21,15 +24,12 @@ export class CardComponent {
 
    card = input.required<Card>();
    boardId = input.required<number>();
-   updateCards = output<void>();
 
-   @ViewChild("nameInput", { static: false })
-   nameInput!: ElementRef;
-   @ViewChild("descriptionInput", { static: false })
-   descriptionInput!: ElementRef;
+   protected cardName = new FormControl('');
+   protected cardDescription = new FormControl('');
 
-   protected isNameEdited: boolean = false;
-   protected isDescriptionEdited: boolean = false;
+   protected isNameEdited = signal<boolean>(false);
+   protected isDescriptionEdited = signal<boolean>(false);
 
    protected selectMenuOption(numberOption: number) {
       const menuOptions = [this.startEditName, this.startEditDescription, this.confirmDeleteСard];
@@ -37,61 +37,57 @@ export class CardComponent {
    }
 
    protected startEditName() {
-      this.isNameEdited = true;
-      setTimeout(() => {
-         this.nameInput.nativeElement.focus();
-      });
+      this.isNameEdited.set(true);
+      this.cardName.setValue(this.card().cardName)
    }
    
    protected cancelEdit() {
-      this.isNameEdited = false;
+      this.isNameEdited.set(false);
    }
 
    protected editName() {
       const cardId: number = this.card().cardId || -1;
-      const newCardName: string = this.nameInput.nativeElement.value || '';
+      const newCardName: string = this.cardName.value || '';
       if (cardId >= 0 && newCardName.trim() != '') {
          this.cardService.renameCard(this.boardId(), cardId, newCardName)
-            .subscribe({
-               next: (result: CardResponce) => {
+            .subscribe(
+               (result: CardResponce) => {
                   if (result.status == 'ok') {
-                     this.updateCards.emit();
+                     this.cardService.updateAccesibleCards(this.boardId());
                   } else {
                      // здесь может быть вывод ошибок пользователю
                   }
                }
-            })
+            )
       }
-      this.isNameEdited = false;
+      this.isNameEdited.set(false);
    }
 
    protected startEditDescription() {
-      this.isDescriptionEdited = true;
-      setTimeout(() => {
-         this.descriptionInput.nativeElement.focus();
-      });
+      this.isDescriptionEdited.set(true);
+      this.cardDescription.setValue(this.card().cardDescription);
    }
    
    protected cancelEditDescription() {
-      this.isDescriptionEdited = false;
+      this.isDescriptionEdited.set(false);
    }
 
    protected editDescription() {
       const cardId: number = this.card().cardId || -1;
-      const newCardDescription: string = this.descriptionInput.nativeElement.value || '';
+      const newCardDescription: string = this.cardDescription.value || '';
       if (cardId >= 0 && newCardDescription.trim() != '') {
          this.cardService.changeDescriptionCard(this.boardId(), cardId, newCardDescription)
-            .subscribe({
-               next: (result: CardResponce) => {
+            .subscribe(
+               (result: CardResponce) => {
                   if (result.status == 'ok') {
-                     this.updateCards.emit();
+                     this.cardService.updateAccesibleCards(this.boardId());
                   } else {
                      // здесь может быть вывод ошибок пользователю
                   }
                }
-            })
+            )
       }
-      this.isDescriptionEdited = false;
+      this.isDescriptionEdited.set(false);
    }
 
    protected confirmDeleteСard() {
@@ -116,16 +112,21 @@ export class CardComponent {
       const cardId: number = this.card().cardId || -1;
       if (cardId >= 0) {
          this.cardService.deleteCard(this.boardId(), cardId)
-            .subscribe({
-               next: (result: UniversalResponce) => {
+            .subscribe(
+               (result: UniversalResponce) => {
                   if (result.status == 'ok') {
-                     this.updateCards.emit();
+                     this.cardService.updateAccesibleCards(this.boardId());
                   } else {
                      // здесь может быть вывод ошибок пользователю
                   }
                }
-            })
+            )
       }
+   }
+   
+   protected selectInputText(event: FocusEvent) {
+      const input = event.target as HTMLInputElement;
+      input?.select();
    }
 
    protected getBorderCard():string {

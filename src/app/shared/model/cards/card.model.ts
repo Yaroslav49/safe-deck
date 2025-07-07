@@ -1,6 +1,6 @@
 export interface Card {
    cardId: number;
    cardName: string;
-   cardDescription?: string;
+   cardDescription: string;
    // + roles[]
 }

@@ -13,7 +13,7 @@
    @if(authForm.controls["publicName"].invalid && authForm.controls["publicName"].touched){
       <span class="alert">Введите имя пользователя</span>
    }
-   <span id="error" class="error"></span>
+   <span class="error"> {{ error() }} </span>
    <br>
 
    <button tuiButton class="blue-button full-width-button" type="submit" [disabled]="authForm.invalid"
