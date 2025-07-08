@@ -1,18 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
 import { tuiDialog, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Card } from '../../shared/model/cards/card.model';
 import { CardComponent } from './card/card.component';
 import { CardService } from '../../services/card-service/card.service';
-import { AccessibleCards } from '../../shared/model/cards/accessible-cards.model';
 import { AccessLevel } from '../../shared/model/cards/access-level.enum';
-import { FullCardComponent } from './card/full-card/full-card.component';
 
 @Component({
   selector: 'cards-page',
-  imports: [MainMenuComponent, TuiScrollbar, TuiIcon, CardComponent],
+  imports: [MainMenuComponent, TuiScrollbar, TuiIcon, CardComponent, RouterLink],
   templateUrl: './cards-page.component.html',
   styleUrl: './cards-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -20,10 +17,6 @@ import { FullCardComponent } from './card/full-card/full-card.component';
 export class CardsPageComponent implements OnInit {
    private readonly activateRoute = inject(ActivatedRoute);
    private readonly cardService = inject(CardService);
-   private readonly fullCardDialog = tuiDialog(FullCardComponent, {
-      dismissible: true,
-      size: 'm',
-   });
 
    protected boardId: number = -1;
 

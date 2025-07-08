@@ -6,6 +6,7 @@ import { CardResponce } from "../../shared/model/cards/card-responce.model";
 import { Card } from "../../shared/model/cards/card.model";
 import { UniversalResponce } from "../../shared/model/universal-responce.model";
 import { AccessLevel } from "../../shared/model/cards/access-level.enum";
+import { CreatingCard } from "../../shared/model/cards/creating-card.model";
 
 @Injectable({ providedIn: 'root' })
 export class CardService {
@@ -29,6 +30,22 @@ export class CardService {
 
    public renameCard(boardId: number, cardId: number, newCardName: string): Observable<CardResponce> {
       return this.http.patch<any>(`http://localhost:8080/cards/rename/${boardId}/${cardId}`, {newCardName})
+         .pipe(
+            map(
+               card => {
+                  return {status: 'ok', card: card};
+               }
+            ),
+            catchError(
+               error => {
+                  return of({status: 'error', error: `Ошибка ${error}!`});
+               }
+            )
+         )
+   }
+
+   public createCard(boardId: number, card: CreatingCard): Observable<CardResponce> {
+      return this.http.post<any>(`http://localhost:8080/cards/${boardId}`, card)
          .pipe(
             map(
                card => {

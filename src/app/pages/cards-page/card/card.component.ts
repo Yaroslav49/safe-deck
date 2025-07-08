@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output, signal, ViewChild } from '@angular/core';
 import { Card } from '../../../shared/model/cards/card.model';
-import { TuiButton, TuiDialogService, TuiDropdown, TuiIcon } from '@taiga-ui/core';
+import { TuiButton, tuiDialog, TuiDialogService, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { ColorService } from '../../../services/color-service/color.service';
 import { CardService } from '../../../services/card-service/card.service';
 import { CardResponce } from '../../../shared/model/cards/card-responce.model';
@@ -9,6 +9,9 @@ import { UniversalResponce } from '../../../shared/model/universal-responce.mode
 import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
+import { SecureDataComponent } from '../../shared/secure-data/secure-data.component';
+import { SecureDataService } from '../../../services/secure-data/secure-data.service';
+import { SecureData } from '../../../shared/model/secure/secure-data.model';
 
 @Component({
   selector: 'card',
@@ -20,7 +23,13 @@ import { TuiAutoFocus } from '@taiga-ui/cdk';
 export class CardComponent {
    private readonly colorService = inject(ColorService);
    private readonly cardService = inject(CardService);
+   private readonly secureDataService = inject(SecureDataService);
    private readonly dialogs = inject(TuiDialogService);
+
+   private readonly secureDataDialog = tuiDialog(SecureDataComponent, {
+      dismissible: true,
+      size: 's',
+   });
 
    card = input.required<Card>();
    boardId = input.required<number>();
@@ -122,6 +131,19 @@ export class CardComponent {
                }
             )
       }
+   }
+
+   protected showSecureData() {
+      this.secureDataService.getSecureData(this.card().cardId)
+      .subscribe(
+         (secureData: SecureData) => {
+            this.secureDataDialog({
+               cardId: this.card().cardId,
+               cardName: this.card().cardName,
+               credentials: secureData.credentials
+            }).subscribe();
+         }
+      )
    }
    
    protected selectInputText(event: FocusEvent) {
