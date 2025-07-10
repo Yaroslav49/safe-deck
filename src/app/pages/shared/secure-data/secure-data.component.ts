@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CredentialPair } from '../../../shared/model/credential-pair.model';
+import { CredentialPair } from '../../../shared/model/secure/credential-pair.model';
 import { TuiButton, TuiDialogContext } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { CardSecure } from '../../../shared/model/secure/card-secure.model';

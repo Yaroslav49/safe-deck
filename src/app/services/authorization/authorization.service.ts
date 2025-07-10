@@ -27,8 +27,34 @@ export class AuthorizationService {
       return this.isLoggedIn;
    }
 
-   login(login: string, password: string): Observable<boolean> {
-      var body = { email: login, password: password };
+   generateRegisterCode(email: string): Observable<number> {
+      return this.http.post<any>('http://localhost:8080/auth/generate-register-code', {email})
+         .pipe(
+            map(() => {
+               return 200;
+            }),
+            catchError(responce => {
+               console.info(responce.error.error);
+               return of(responce.status);
+            })
+         );
+   }
+
+   generate2FACode(email: string): Observable<boolean> {
+      return this.http.post<any>('http://localhost:8080/auth/generate-2fa-code', {email})
+         .pipe(
+            map(() => {
+               return true;
+            }),
+            catchError(error => {
+               console.info(error.error.error);
+               return of(false);
+            })
+         );
+   }
+
+   login(login: string, password: string, generatedCode: string): Observable<boolean> {
+      var body = { email: login, password, generatedCode };
       console.log("login start");
       return this.http.post<any>('http://localhost:8080/auth/login', body)
          .pipe(
@@ -55,8 +81,8 @@ export class AuthorizationService {
       this.isLoggedIn = false;
    }
 
-   register(login: string, password: string, publicName: string): Observable<number> {
-      var body = { email: login, password, publicName };
+   register(login: string, password: string, publicName: string, generatedCode: string): Observable<number> {
+      var body = { email: login, password, publicName, generatedCode };
       return this.http.post<any>('http://localhost:8080/auth/register', body)
          .pipe(
             map(response => {

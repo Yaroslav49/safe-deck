@@ -8,8 +8,8 @@ import { CardPageComponent } from './pages/card-page/card-page.component';
 
 export const routes: Routes = [
    {path: 'boards', component: BoardsPageComponent, canActivate: [RouteGuardAuth]},
-   {path: 'cards/:board-id', component: CardsPageComponent},
-   {path: 'card/:board-id/:card-id', component: CardPageComponent},
+   {path: 'cards/:board-id', component: CardsPageComponent, canActivate: [RouteGuardAuth]},
+   {path: 'card/:board-id/:card-id', component: CardPageComponent, canActivate: [RouteGuardAuth]},
    {path: 'profile', component: ProfileComponent, canActivate: [RouteGuardAuth]},
    {path: '**', component: WelcomePageComponent},
 ];

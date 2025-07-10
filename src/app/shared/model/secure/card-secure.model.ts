@@ -1,4 +1,4 @@
-import { CredentialPair } from "../credential-pair.model";
+import { CredentialPair } from "./credential-pair.model";
 
 export interface CardSecure {
    cardId: number;

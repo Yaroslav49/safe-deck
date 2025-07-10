@@ -5,6 +5,7 @@ import { Board } from '../../../shared/model/boards/board.model';
 import { BoardService } from '../../../services/board-service/board.service';
 import { RouterLink } from '@angular/router';
 import { ColorService } from '../../../services/color-service/color.service';
+import { ProfileService } from '../../../services/profile/profile.service';
 
 @Component({
   selector: 'main-menu',
@@ -16,19 +17,21 @@ import { ColorService } from '../../../services/color-service/color.service';
 export class MainMenuComponent implements OnInit {
    private readonly boardService = inject(BoardService);
    private readonly colorService = inject(ColorService);
+   private readonly profileService = inject(ProfileService);
    
-   protected userName: string = "Ярослав Зверев";
+   protected userName = this.profileService.publicName;
    protected boards = this.boardService.getBoards();
 
    ngOnInit() {
       this.boardService.updateUserBoards();
+      this.profileService.updateProfile();
    }
 
    protected getAvatarText(): string {
-      return this.userName[0].toUpperCase();
+      return this.userName()[0].toUpperCase();
    }
 
    protected getAvatarColor(): string {
-      return this.colorService.getAccentColor(this.userName.charCodeAt(0));
+      return this.colorService.getAccentColor(this.userName().charCodeAt(0));
    }
 }

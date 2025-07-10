@@ -17,12 +17,12 @@ export class JwtInterceptor implements HttpInterceptor {
       if (token) {
          let decoded = Object(jwtDecode(token));
          let nowSeconds = new Date().getTime() / 1000;
-         //console.log(`секунд до сброса jwt: ${decoded.exp - nowSeconds}`);
+         console.log(`секунд до сброса jwt: ${decoded.exp - nowSeconds}`);
          if (nowSeconds >= decoded.exp) { // сбрасываем невалидный jwt
             localStorage.removeItem('jwt');
             this.authService.isLoggedIn = false;
             this.authService.role = Role.GUEST;
-            this.router.navigate(['']);
+            this.router.navigateByUrl('/');
             return next.handle(req);
          }
          const authReq = req.clone({

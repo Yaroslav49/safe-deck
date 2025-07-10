@@ -17,7 +17,31 @@
                [style.color]="'white'"
                [style.font-family]="'var(--main-font)'"
             />
-            <span class="text">{{ userName }}</span>
+
+            @if (isNameEdited()) {
+               <input
+                  tuiAutoFocus
+                  type="text" class="text input"
+                  [formControl]="userNameControl"
+                  (keydown.enter.prevent)="editName()"
+                  (blur)="cancelEdit()"
+                  (focus)="selectInputText($event)"
+               >
+            }
+            @else {
+               <span class="text" (dblclick)="startEdit()">{{ userName() }}</span>
+               <button 
+                  tuiButton 
+                  class="light-gray-button"
+                  size="s"
+                  (click)="startEdit()"
+               >
+                  <tui-icon
+                     icon="@tui.pencil"
+                     class="small-icon"
+                  ></tui-icon>
+               </button>
+            }
          </div>
 
          <button tuiButton size="m" class="light-button auth-button" (click)="logout()">Выйти из аккаунта</button>

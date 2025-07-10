@@ -7,7 +7,7 @@ import { CardService } from '../../services/card-service/card.service';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CredentialPair } from '../../shared/model/credential-pair.model';
+import { CredentialPair } from '../../shared/model/secure/credential-pair.model';
 import { CreatingCard } from '../../shared/model/cards/creating-card.model';
 import { CardResponce } from '../../shared/model/cards/card-responce.model';
 

@@ -1,4 +1,4 @@
-import { RoleCard } from "../role.model";
+import { RoleCard } from "../roles/role.model";
 
 export interface Card {
    cardId: number;

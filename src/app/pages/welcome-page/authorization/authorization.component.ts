@@ -10,7 +10,7 @@ import { DialogAuthorizationService } from '../dialog-authorization/dialog-autho
   selector: 'app-authorization',
   imports: [TuiButton, ReactiveFormsModule],
   templateUrl: './authorization.component.html',
-  styleUrl: './authorization.component.css',
+  styleUrl: '../../../shared/styles/auth.styles.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthorizationComponent {
@@ -20,7 +20,7 @@ export class AuthorizationComponent {
    readonly context = injectContext<TuiDialogContext<void,void>>();
 
    protected authForm: FormGroup = new FormGroup({
-      login: new FormControl('', Validators.required),
+      login: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required)
    })
 
@@ -32,14 +32,44 @@ export class AuthorizationComponent {
    }
 
    protected onSubmit():void {
-      this.authService.login(
-         this.authForm.controls['login'].value, this.authForm.controls['password'].value
-      ).subscribe(
+      let email = this.authForm.controls['login'].value;
+      let password = this.authForm.controls['password'].value;
+
+      this.authService.generate2FACode(email)
+      .subscribe(
+         (ok) => {
+            if (ok) {
+               this.context.completeWith();
+               this.requestConfirmationCode(email, password);
+            } else {
+               this.error.set('Ошибка: проверьте учётные данные');
+            }
+         }
+      )
+   }
+
+
+   private requestConfirmationCode(email: string, password: string) {
+      this.dialogAuthService.showConfirmationCodeDialog()
+         .subscribe(
+            (code: string) => {
+               if (this.codeIsValid(code)) {
+                  this.login(email, password, code);
+               }     
+            }
+         )
+   }
+   
+   private codeIsValid(code: string): boolean {
+      return code.length == 5;
+   }
+
+   private login(email: string, password: string, code: string) {
+      this.authService.login(email, password, code)
+      .subscribe(
          (result: boolean) => {
             if (result) {
-               this.error.set('');
                this.router.navigate(['/boards']);
-               this.context.completeWith();
             } else {
                this.error.set('Ошибка: аккаунт с таким логином и паролем не найден');
             }

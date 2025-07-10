@@ -5,16 +5,19 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { TuiButton, TuiDialogContext } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { DialogAuthorizationService } from '../dialog-authorization/dialog-authorization.service';
+import { RegisterData } from '../../../shared/model/auth/register.model';
+import { ProfileService } from '../../../services/profile/profile.service';
 
 @Component({
   selector: 'app-registration',
   imports: [TuiButton, ReactiveFormsModule],
   templateUrl: './registration.component.html',
-  styleUrl: '../authorization/authorization.component.css',
+  styleUrl: '../../../shared/styles/auth.styles.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationComponent {
    private readonly authService = inject(AuthorizationService);
+   private readonly profileService = inject(ProfileService);
    private readonly dialogAuthService = inject(DialogAuthorizationService);
    private readonly router = inject(Router);
    readonly context = injectContext<TuiDialogContext<void,void>>();
@@ -26,7 +29,7 @@ export class RegistrationComponent {
    }
 
    protected authForm: FormGroup = new FormGroup({
-      login: new FormControl('', Validators.required),
+      login: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
       publicName: new FormControl('', Validators.required)
    })
@@ -38,9 +41,47 @@ export class RegistrationComponent {
    }
 
    protected onSubmit():void {
-      this.authService.register(
-         this.authForm.controls['login'].value, this.authForm.controls['password'].value, this.authForm.controls['publicName'].value
-      ).subscribe(
+      let email = this.authForm.controls['login'].value;
+      let password = this.authForm.controls['password'].value;
+      let publicName = this.authForm.controls['publicName'].value;
+      let data = {email, password, publicName};
+
+      this.authService.generateRegisterCode(email)
+      .subscribe(
+         (resultCode: number) => {
+            if (resultCode == 200) {
+               this.context.completeWith();
+               this.requestConfirmationCode(data);
+            } else {
+               var errorText: string | undefined = this.errors[resultCode];
+               if (!errorText) {
+                  errorText = 'Неизвестная ошибка';
+               }
+               this.error.set(errorText);
+            }
+         }
+      )
+   }
+
+   private requestConfirmationCode(data: RegisterData) {
+      this.dialogAuthService.showConfirmationCodeDialog()
+         .subscribe(
+            (code: string) => {
+               if (this.codeIsValid(code)) {
+                  data.code = code;
+                  this.registerAccount(data);
+               }     
+            }
+         )
+   }
+
+   private codeIsValid(code: string): boolean {
+      return code.length == 5;
+   }
+
+   private registerAccount(data: RegisterData) {
+      this.authService.register(data.email, data.password, data.publicName, data?.code || '')
+      .subscribe(
          (resultCode: number) => {
             if (resultCode == 200) {
                this.error.set('');
