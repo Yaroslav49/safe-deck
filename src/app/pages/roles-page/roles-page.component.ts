@@ -1,0 +1,117 @@
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TuiButton, TuiDialogService, TuiIcon } from '@taiga-ui/core';
+import { RoleService } from '../../services/role-service/role.service';
+import { CardService } from '../../services/card-service/card.service';
+import { AccessLevel } from '../../shared/model/cards/access-level.enum';
+import { Card } from '../../shared/model/cards/card.model';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TuiAutoFocus } from '@taiga-ui/cdk';
+import { TUI_CONFIRM } from '@taiga-ui/kit';
+import { RoleResponce } from '../../shared/model/roles/role-responce.model';
+
+@Component({
+  selector: 'app-roles-page',
+  imports: [MainMenuComponent, RouterLink, TuiIcon, TuiButton, TuiAutoFocus, ReactiveFormsModule],
+  templateUrl: './roles-page.component.html',
+  styleUrl: './roles-page.component.css'
+})
+export class RolesPageComponent implements OnInit {
+   private readonly activateRoute = inject(ActivatedRoute);
+   private readonly roleService = inject(RoleService);
+   private readonly cardService = inject(CardService);
+   private readonly dialogs = inject(TuiDialogService);
+
+   protected roles = this.roleService.boardRoles;
+   protected boardId: number = -1;
+
+   protected selectRoleIndex = signal<number>(-1);
+   protected isEditName = signal<boolean>(false);
+   protected isCreateRole = signal<boolean>(false);
+
+   protected createdRoleName = new FormControl('');
+
+   protected get cards(): Card[] {
+      return this.AccessibleCards().accessibleCards;
+   }
+
+   protected get accessLevel(): AccessLevel {
+      return this.AccessibleCards().accessLevel;
+   }
+
+   private AccessibleCards = this.cardService.getAccessibleCardsSignal();
+
+   ngOnInit() {
+      this.activateRoute.params.subscribe(params => {
+         this.boardId = params["board-id"];
+         this.roleService.updateBoardRoles(this.boardId);
+         this.cardService.updateAccesibleCards(this.boardId);
+      });
+   }
+
+   protected startCreatingRole() {
+      this.isCreateRole.set(true);
+      this.selectRoleIndex.set(-1);
+   }
+
+   protected cancelCreatingRole() {
+      this.isCreateRole.set(false);
+   }
+
+   protected createRole() {
+      let nameRole = this.createdRoleName.value;
+      if (nameRole && nameRole.trim() != '') {
+         this.roleService.createRole(this.boardId, nameRole).subscribe(
+            (roleResponce: RoleResponce) => {
+               this.roleService.updateBoardRoles(this.boardId);
+               // выделяем созданную роль
+               setTimeout(() => {
+                  let index = this.roles().findIndex(role => role.roleId == roleResponce.role?.roleId);
+                  this.selectRoleIndex.set(index);
+               }, 100)
+            }
+         );
+      }
+      this.isCreateRole.set(false);
+      this.createdRoleName.setValue('');
+   }
+
+   protected selectRow(index: number) {
+      this.selectRoleIndex.set(index);
+   }
+
+   protected confirmDeleteRole() {
+      this.dialogs
+         .open<boolean>(TUI_CONFIRM, {
+            label: 'Предупреждение',
+            size: 's',
+            data: {
+               content: 'Вы уверены, что хотите удалить роль? Это действие необратимо',
+               yes: 'Да',
+               no: 'Нет',
+            },
+         })
+         .subscribe(response => {
+            if (response) {
+               this.deleteRole();
+            }
+         })
+   }
+
+   protected deleteRole() {
+      let index: number = this.selectRoleIndex();
+      if (index >= 0) {
+         let roleId = this.roles()[index].roleId;
+         this.roleService.deleteRole(this.boardId, roleId)
+         .subscribe(
+            (resultCode: number) => {
+               if (resultCode == 200) {
+                  this.roleService.updateBoardRoles(this.boardId);
+                  this.selectRoleIndex.set(-1);
+               }
+            }
+         )
+      }
+   }
+}
