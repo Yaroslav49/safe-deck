@@ -11,14 +11,24 @@ export class BoardService {
 
    private boardsSignal = signal<Board[]>([]);
 
+   private currentBoardnameSignal = signal<string>('');
+
    public updateUserBoards() {
       this.getUserBoards().subscribe(
          boards => this.boardsSignal.set(boards)
       )
    }
 
-   public getBoards() {
+   public get boards() {
       return this.boardsSignal;
+   }
+
+   public get currentBoardName() {
+      return this.currentBoardnameSignal;
+   }
+
+   public updateCurrentBoardName(name: string) {
+      this.currentBoardnameSignal.set(name);
    }
 
    private getUserBoards(): Observable<Board[]>  {

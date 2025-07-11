@@ -3,7 +3,7 @@ import { TuiButton, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
 import {TuiAvatar} from '@taiga-ui/kit';
 import { Board } from '../../../shared/model/boards/board.model';
 import { BoardService } from '../../../services/board-service/board.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ColorService } from '../../../services/color-service/color.service';
 import { ProfileService } from '../../../services/profile/profile.service';
 
@@ -18,13 +18,22 @@ export class MainMenuComponent implements OnInit {
    private readonly boardService = inject(BoardService);
    private readonly colorService = inject(ColorService);
    private readonly profileService = inject(ProfileService);
+   private readonly router = inject(Router);
    
    protected userName = this.profileService.publicName;
-   protected boards = this.boardService.getBoards();
+   protected boards = this.boardService.boards;
 
    ngOnInit() {
       this.boardService.updateUserBoards();
       this.profileService.updateProfile();
+   }
+
+   protected openBoard(boardId: number) {
+      let board = this.boards().find(board => board.boardId == boardId);
+      if (board) {
+         this.boardService.updateCurrentBoardName(board.boardName);
+         this.router.navigate(['/cards', board.boardId]);
+      }    
    }
 
    protected getAvatarText(): string {

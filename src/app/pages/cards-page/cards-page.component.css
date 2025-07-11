@@ -15,7 +15,7 @@
 .header-group {
    display: flex;
    flex-direction: row;
-   justify-content: flex-start;
+   justify-content: space-between;
    align-items: center;
    flex-wrap: wrap;
    gap: 2rem;
@@ -48,6 +48,7 @@
    font-family: var(--main-font);
    font-size: var(--normal-font-size);
    line-height: var(--normal-font-size);
+   text-decoration: none;
 }
 
 .title-link:hover {
@@ -80,6 +81,10 @@
 /* other */
 .gap {
    gap: 0.5rem;
+}
+
+.big-gap {
+   gap: 2rem;
 }
 
 .page-padding {
