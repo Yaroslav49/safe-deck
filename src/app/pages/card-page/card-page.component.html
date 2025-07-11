@@ -68,14 +68,14 @@
                                        class="table-text"
                                        formControlName="value"
                                        size="20"
-                                       [type]="isPasswordVisible() ? 'text' : 'password'"
+                                       [type]="isPasswordVisible($index) ? 'text' : 'password'"
                                        tuiTextfield
                                     />
                                     <tui-icon 
-                                    [icon]="isPasswordVisible() ? 'eye-off' : 'eye'" 
+                                    [icon]="isPasswordVisible($index) ? 'eye-off' : 'eye'" 
                                     size="m" 
                                     class="small-icon"
-                                    (click)="togglePasswordVisibility()"></tui-icon>
+                                    (click)="togglePasswordVisibility($index)"></tui-icon>
                                  </tui-textfield>         
                               </td>
          

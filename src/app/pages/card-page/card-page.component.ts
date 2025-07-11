@@ -38,7 +38,7 @@ export class CardPageComponent implements OnInit {
 
    protected readonly columns = ['name', 'value', 'icon'];
 
-   public isPasswordVisible = signal(false);
+   public indexPasswordVisible = signal(-1);
 
    protected boardId: number = -1;
    protected cardId: number = -1;
@@ -105,8 +105,16 @@ export class CardPageComponent implements OnInit {
       this.array.removeAt(id);
    }
 
-   public togglePasswordVisibility(): void {
-      this.isPasswordVisible.update(v => !v);
+   public isPasswordVisible(id: number): boolean {
+      return this.indexPasswordVisible() == id;
+   }
+
+   public togglePasswordVisibility(id: number): void {
+      if (this.indexPasswordVisible() == id) {
+         this.indexPasswordVisible.set(-1);
+      } else {
+         this.indexPasswordVisible.set(id);
+      }
    }
 
 }
