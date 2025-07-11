@@ -16,7 +16,7 @@ import { BoardResponce } from '../../shared/model/boards/board-responce.model';
 export class BoardsPageComponent {
    private readonly boardService = inject(BoardService);
    
-   protected boards = this.boardService.getBoards();
+   protected boards = this.boardService.boards;
 
    @ViewChildren(BoardInfoComponent)
    protected boardsElements!: QueryList<BoardInfoComponent>;

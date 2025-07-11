@@ -42,7 +42,7 @@ export class AuthorizationComponent {
                this.context.completeWith();
                this.requestConfirmationCode(email, password);
             } else {
-               this.error.set('Ошибка: проверьте учётные данные');
+               this.error.set('Ошибка: аккаунт с таким логином и паролем не найден');
             }
          }
       )
