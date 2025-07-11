@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from "@angular/core";
 import { RoleCard } from "../../shared/model/roles/role.model";
 import { catchError, map, Observable, of } from "rxjs";
 import { RoleResponce } from "../../shared/model/roles/role-responce.model";
+import { Card } from "../../shared/model/cards/card.model";
 
 @Injectable({ providedIn: 'root' })
 export class RoleService {
@@ -37,6 +38,18 @@ export class RoleService {
 
    public deleteRole(boardId: number, roleId: number): Observable<number> {
       return this.http.delete<any>(`http://localhost:8080/roles/${boardId}/${roleId}`)
+      .pipe(
+         map(
+            () => 200
+         ),
+         catchError(
+            responce => of(responce.status)
+         )
+      )
+   }
+
+   public updateCardsRole(boardId: number, roleId: number, cards: Card[]): Observable<number> {
+      return this.http.patch<any>(`http://localhost:8080/roles/${boardId}/${roleId}`, cards)
       .pipe(
          map(
             () => 200

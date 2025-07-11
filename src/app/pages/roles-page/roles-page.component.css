@@ -20,6 +20,14 @@
    gap: 2rem;
 }
 
+.horizontal-center-list {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   gap: 0.5rem;
+}
+
 .full-width {
    width: 100%;
 }

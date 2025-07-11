@@ -51,19 +51,40 @@
                   }
                </div>
 
-               <div class="half-width vertical-list cloud">
-                  <div class="header-row">Карточки</div>
-                  @for (card of cards; track card.cardId) {
-                     <div class="row2">
-                        {{ card.cardName }}
-                     </div>
+               <div class="half-width vertical-list">
+                  <div class="full-width cloud">
+                     <div class="header-row">Карточки</div>
+                     @if (selectRoleIndex() == -1) {
+                        <div class="row2">
+                           Выберите роль
+                        </div>
+                     } @else {
+                     <form [formGroup]="roleForm" class="full-width">
+                        <div formArrayName="checkboxes" class="full-width vertical-list">
+                           @for (card of cards; track card.cardId) {
+                              <div class="row2 horizontal-center-list">
+                                 <input tuiCheckbox type="checkbox" [formControlName]="$index">
+                                 {{ card.cardName }}
+                              </div>
+                           }
+                           @empty {
+                              <div class="row2">
+                                 Пока нет карточек
+                              </div>
+                           }
+                        </div>
+                     </form>
+                     }
+                  </div>
+                  @if (selectRoleIndex() != -1) {
+                     <br>
+                     <button tuiButton size="m" class="blue-button" (click)="updateCardsRole()">
+                        <tui-icon icon="check" class="icon"></tui-icon>
+                        Сохранить изменения
+                     </button>
                   }
-                  @empty {
-                     <div class="row2">
-                        Пока нет карточек
-                     </div>
-                  }
-               </div>
+                  
+               </div>     
             </div>
          </div>
       </div>
