@@ -32,10 +32,11 @@ export class RolesPageComponent implements OnInit {
    protected boardId: number = -1;
 
    protected selectRoleIndex = signal<number>(-1);
-   protected isEditName = signal<boolean>(false);
+   protected editRoleIndex = signal<number>(-1);
    protected isCreateRole = signal<boolean>(false);
 
    protected createdRoleName = new FormControl('');
+   protected editedRoleName = new FormControl('');
 
    protected get cards(): Card[] {
       return this.AccessibleCards().accessibleCards;
@@ -160,5 +161,29 @@ export class RolesPageComponent implements OnInit {
             }
          )
       } 
+   }
+
+   protected startEditingRole() {
+      this.editRoleIndex.set(this.selectRoleIndex());
+      this.editedRoleName.setValue(this.roles()[this.selectRoleIndex()].roleName);
+      this.selectRoleIndex.set(-1);
+   }
+
+   protected cancelEditingRole() {
+      this.selectRoleIndex.set(this.editRoleIndex());
+      this.editRoleIndex.set(-1);
+   }
+
+   protected editRole(roleId: number) {
+      let nameRole = this.editedRoleName.value;
+      if (nameRole && nameRole.trim() != '') {
+         this.roleService.renameRole(this.boardId, roleId, nameRole).subscribe(
+            () => {
+               this.roleService.updateBoardRoles(this.boardId);
+               this.selectRoleIndex.set(this.editRoleIndex());
+               this.editRoleIndex.set(-1);
+            }
+         )
+      }
    }
 }

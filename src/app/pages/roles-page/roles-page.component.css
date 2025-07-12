@@ -12,6 +12,21 @@
    align-items: flex-start;
 }
 
+.horizontal-wrap-list {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: flex-start;
+   flex-wrap: wrap;
+}
+
+.horizontal-space-list {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: flex-start;
+}
+
 .group-horiz-list {
    display: flex;
    flex-direction: row;
@@ -33,12 +48,12 @@
 }
 
 .full-width-page {
-   width: min(600px, calc(100% - 3rem));
+   width: min(800px, calc(100% - 3rem));
    margin: 1.5rem;
 }
 
 .half-width {
-   width: calc(50% - 0rem);
+   min-width: calc(50% - 1rem);
 }
 
 .row, .row2, .selected-row {

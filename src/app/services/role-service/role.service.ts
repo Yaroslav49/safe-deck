@@ -36,6 +36,22 @@ export class RoleService {
       )
    }
 
+   public renameRole(boardId: number, roleId: number, newRoleName: string): Observable<RoleResponce> {
+      return this.http.patch<any>(`http://localhost:8080/roles/${boardId}/rename/${roleId}`, {newRoleName})
+      .pipe(
+         map(
+            role => {
+               return {status: 'ok', role};
+            }
+         ),
+         catchError(
+            error => {
+               return of({status: 'error', error: `Ошибка ${error}!`});
+            }
+         )
+      )
+   }
+
    public deleteRole(boardId: number, roleId: number): Observable<number> {
       return this.http.delete<any>(`http://localhost:8080/roles/${boardId}/${roleId}`)
       .pipe(
