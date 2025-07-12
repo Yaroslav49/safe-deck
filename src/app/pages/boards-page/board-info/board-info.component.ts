@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { Board } from '../../../shared/model/boards/board.model';
 import { TuiButton, TuiDialogService, TuiIcon } from '@taiga-ui/core';
 import { BoardService } from '../../../services/board-service/board.service';

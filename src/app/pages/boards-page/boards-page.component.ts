@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, QueryList, ViewChildren } from '@angular/core';
 import { MainMenuComponent } from "../shared/main-menu/main-menu.component";
-import { Board } from '../../shared/model/boards/board.model';
 import { BoardInfoComponent } from './board-info/board-info.component';
 import { BoardService } from '../../services/board-service/board.service';
 import { TuiIcon, TuiScrollbar } from '@taiga-ui/core';
