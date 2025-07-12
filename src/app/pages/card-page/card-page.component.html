@@ -95,6 +95,12 @@
                      Добавить строку
                   </a>
                </div>
+
+               <span class="text">Роли, которым доступна карточка:</span>
+
+               <div class="block vertical-list gap">
+                  <select-roles [boardId]="boardId"></select-roles>
+               </div>
       
                <button tuiButton class="blue-button right" size="l" type="submit" [disabled]="cardForm.invalid" (click)="onSubmit()">
                   Создать

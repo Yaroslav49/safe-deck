@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { Card } from '../../../shared/model/cards/card.model';
-import { TuiButton, tuiDialog, TuiDialogService, TuiDropdown, TuiIcon } from '@taiga-ui/core';
+import { TuiButton, tuiDialog, TuiDialogService } from '@taiga-ui/core';
 import { ColorService } from '../../../services/color-service/color.service';
 import { CardService } from '../../../services/card-service/card.service';
 import { CardResponce } from '../../../shared/model/cards/card-responce.model';
