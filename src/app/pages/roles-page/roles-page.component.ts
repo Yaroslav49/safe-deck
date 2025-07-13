@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TuiButton, TuiDialogService, TuiIcon } from '@taiga-ui/core';
+import { TuiButton, TuiDialogService, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
 import { RoleService } from '../../services/role-service/role.service';
 import { CardService } from '../../services/card-service/card.service';
 import { AccessLevel } from '../../shared/model/cards/access-level.enum';
@@ -16,7 +16,7 @@ import { AlertService } from '../../services/alert-service/alert.service';
 
 @Component({
   selector: 'app-roles-page',
-  imports: [MainMenuComponent, RouterLink, TuiIcon, TuiButton, TuiAutoFocus, TuiCheckbox, ReactiveFormsModule],
+  imports: [MainMenuComponent, RouterLink, TuiIcon, TuiButton, TuiAutoFocus, TuiCheckbox, ReactiveFormsModule, TuiScrollbar],
   templateUrl: './roles-page.component.html',
   styleUrl: './roles-page.component.css'
 })

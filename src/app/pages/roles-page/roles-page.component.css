@@ -93,6 +93,11 @@
    font-weight: bold;
 }
 
+.box {
+   inline-size: 100%;
+   block-size: calc(100vh - 2rem - 5rem - 2*var(--normal-font-size) - 2.75rem);
+}
+
 /* texts */
 
 .text {

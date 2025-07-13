@@ -36,75 +36,82 @@
          
 
          <div class="group-horiz-list full-width">
-            <!-- Левая часть - роли -->
-            <div class="half-width vertical-list">              
+
+            <!-- Левая часть - роли -->           
+            <div class="half-width vertical-list cloud">
                <div class="header-row">Роли</div>
-               @if (isCreateRole()) {
-                  <input
-                     tuiAutoFocus
-                     class="row2 input"
-                     placeholder="Название роли"
-                     [formControl]="createdRoleName"
-                     (keydown.enter.prevent)="createRole()"
-                     (blur)="cancelCreatingRole()"
-                  >
-               }
-               @for (role of roles(); track role.roleId) {
-                  @if (editRoleIndex() == $index) {
-                     <input
-                        tuiAutoFocus
-                        class="row2 input"
-                        placeholder="Название роли"
-                        [formControl]="editedRoleName"
-                        (keydown.enter.prevent)="editRole(role.roleId)"
-                        (blur)="cancelEditingRole()"
-                     >
-                  } @else {
-                     <div 
-                        [class]="selectRoleIndex() == $index ? 'selected-row' : 'row'"
-                        (click)="selectRow($index)"
-                     >
-                        {{ role.roleName }}
-                     </div>
-                  }
-                  
-               }
-               @empty {
-                  <div class="row2">
-                     Пока нет ролей
+               <tui-scrollbar class="box">
+                  <div class="full-width vertical-list">
+                     @if (isCreateRole()) {
+                        <input
+                           tuiAutoFocus
+                           class="row2 input"
+                           placeholder="Название роли"
+                           [formControl]="createdRoleName"
+                           (keydown.enter.prevent)="createRole()"
+                           (blur)="cancelCreatingRole()"
+                        >
+                     }
+                     @for (role of roles(); track role.roleId) {
+                        @if (editRoleIndex() == $index) {
+                           <input
+                              tuiAutoFocus
+                              class="row2 input"
+                              placeholder="Название роли"
+                              [formControl]="editedRoleName"
+                              (keydown.enter.prevent)="editRole(role.roleId)"
+                              (blur)="cancelEditingRole()"
+                           >
+                        } @else {
+                           <div 
+                              [class]="selectRoleIndex() == $index ? 'selected-row' : 'row'"
+                              (click)="selectRow($index)"
+                           >
+                              {{ role.roleName }}
+                           </div>
+                        } 
+                     }
+                     @empty {
+                        <div class="row2">
+                           Пока нет ролей
+                        </div>
+                     }
                   </div>
-               }
+               </tui-scrollbar>               
             </div>
+            
 
-            <!-- Правая часть - карточки -->
-            <div class="half-width vertical-list gap">
-
-               <div class="full-width cloud">
-                  <div class="header-row">Карточки</div>
-                  @if (selectRoleIndex() == -1) {
-                     <div class="row2">
-                        Выберите роль
-                     </div>
-                  } @else {
-                  <form [formGroup]="roleForm" class="full-width">
-                     <div formArrayName="checkboxes" class="full-width vertical-list">
-                        @for (card of cards; track card.cardId) {
-                           <div class="row2 horizontal-center-list">
-                              <input tuiCheckbox type="checkbox" [formControlName]="$index">
-                              {{ card.cardName }}
-                           </div>
-                        }
-                        @empty {
-                           <div class="row2">
-                              Пока нет карточек
-                           </div>
-                        }
-                     </div>
-                  </form>
-                  }
-               </div>
-               
-            </div>     
+            <!-- Правая часть - карточки -->   
+            <div class="half-width vertical-list cloud">
+               <div class="header-row">Карточки</div>
+               <tui-scrollbar class="box">
+                  <div class="full-width vertical-list">
+                     
+                     @if (selectRoleIndex() == -1) {
+                        <div class="row2">
+                           Выберите роль
+                        </div>
+                     } @else {
+                     <form [formGroup]="roleForm" class="full-width">
+                        <div formArrayName="checkboxes" class="full-width vertical-list">
+                           @for (card of cards; track card.cardId) {
+                              <div class="row2 horizontal-center-list">
+                                 <input tuiCheckbox type="checkbox" [formControlName]="$index">
+                                 {{ card.cardName }}
+                              </div>
+                           }
+                           @empty {
+                              <div class="row2">
+                                 Пока нет карточек
+                              </div>
+                           }
+                        </div>
+                     </form>
+                     }
+                  </div>
+               </tui-scrollbar>                
+            </div>
+    
          </div>
       </div>
    </div>
