@@ -17,15 +17,27 @@ export class SelectRolesComponent implements OnInit {
    public boardId = input.required<number>();
 
    protected selectedRoles = signal<RoleCard[]>([]);
-   protected roles = this.roleService.boardRoles;
+   protected roles = this.roleService.boardRoles; //signal<RoleCard[]>([]);
    protected openDropDown = false;
 
    ngOnInit() {
       this.roleService.updateBoardRoles(this.boardId());
+      /*this.roleService.getBoardRoles(this.boardId())
+      .subscribe(
+         (roles: RoleCard[]) => {
+            this.roles.set(
+               roles.filter(role => role.)
+            )
+         }
+      )*/
    }
 
    public getSelectedRoles(): RoleCard[] {
       return this.selectedRoles();
+   }
+
+   public setSelectedRoles(roles: RoleCard[]) {
+      this.selectedRoles.set(roles);
    }
 
    protected addRole(role: RoleCard): void {

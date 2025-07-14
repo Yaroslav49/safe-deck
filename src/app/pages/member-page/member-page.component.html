@@ -20,7 +20,15 @@
                
                <div class="input-line">
                   <label for="email" class="text">Email</label>
-                  <input class="input" name="email" formControlName="email" required maxlength="50" size="50">
+                  <input 
+                     class="input" 
+                     name="email"
+                     formControlName="email" 
+                     [readOnly]="memberId >= 0"
+                     required 
+                     maxlength="50" 
+                     size="50"
+                  >
                </div>
 
                <span class="text">Доступные участнику роли:</span>
@@ -40,7 +48,14 @@
                      Добавить
                   </button>
                } @else {
-                  <button tuiButton class="blue-button right" size="l" type="submit" [disabled]="memberForm.invalid">
+                  <button 
+                     tuiButton
+                     class="blue-button right"
+                     size="l"
+                     type="submit"
+                     [disabled]="memberForm.invalid"
+                     (click)="updateBoardMember()"
+                  >
                      Сохранить
                   </button>
                }

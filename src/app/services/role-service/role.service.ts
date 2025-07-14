@@ -76,7 +76,7 @@ export class RoleService {
       )
    }
 
-   private getBoardRoles(boardId: number): Observable<RoleCard[]>  {
+   public getBoardRoles(boardId: number): Observable<RoleCard[]>  {
       return this.http.get<RoleCard[]>(`http://localhost:8080/roles/${boardId}`);
    }
 }

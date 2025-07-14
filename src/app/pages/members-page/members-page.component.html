@@ -46,14 +46,14 @@
                               </td>
       
                               <td *tuiCell="'action1'" class="table-text" tuiTd>
-                                 <button tuiButton class="light-gray-button" size="s">
+                                 <button tuiButton class="light-gray-button" size="s" routerLink="/member/{{boardId}}/{{boardMember.id}}">
                                     <tui-icon icon="pencil" size="m" class="small-icon"></tui-icon>
                                     Изменить
                                  </button>
                               </td>
       
                               <td *tuiCell="'action2'" class="table-text" tuiTd>
-                                 <button tuiButton class="light-gray-button" size="s">
+                                 <button tuiButton class="light-gray-button" size="s" (click)="confirmDeleteBoardMember(boardMember.id)">
                                     <tui-icon icon="trash" size="m" class="small-icon"></tui-icon>
                                     Удалить
                                  </button>
