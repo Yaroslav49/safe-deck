@@ -34,6 +34,16 @@
    block-size: calc(100vh - 2rem - var(--normal-font-size));
 }
 
+.info-block {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+
+   padding: 1rem;
+   gap: 1rem;
+}
+
 /* texts */
 
 .title {
@@ -70,12 +80,25 @@
    cursor: pointer;
 }
 
+.text {
+   color: black;
+   font-family: var(--main-font);
+   font-size: 1.5rem;
+   line-height: 1.5rem;
+}
+
 /* images */
 
 .icon {
    width: var(--normal-font-size);
    height: var(--normal-font-size);
    margin-right: 0.5rem;
+}
+
+.image {
+   height: 60vh;
+   width: auto;
+   object-fit: contain;
 }
 
 /* other */

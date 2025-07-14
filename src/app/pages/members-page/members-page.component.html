@@ -10,12 +10,23 @@
       </div>
 
       <div class="full-width-page vertical-list gap">
-         <button tuiButton size="m" class="blue-button" routerLink="/member/{{boardId}}/-1">
-            <tui-icon icon="plus" class="icon"></tui-icon>
-            Добавить участника
-         </button>
+         @if (boardMembers().length == 0) {
+            <div class="cloud info-block">
+               <span class="text">Вы пока не приглашали в проект участников. Самое время это исправить! </span>
+               <img src="images/people.png" class="image">
+               <button tuiButton size="m" class="blue-button" routerLink="/member/{{boardId}}/-1">
+                  <tui-icon icon="plus" class="icon"></tui-icon>
+                  Добавить участника
+               </button>
+            </div>
+         }
 
          @if (boardMembers().length != 0) {
+            <button tuiButton size="m" class="blue-button" routerLink="/member/{{boardId}}/-1">
+               <tui-icon icon="plus" class="icon"></tui-icon>
+               Добавить участника
+            </button>
+
             <div class="cloud">
                <tui-scrollbar class="box">
                   <table

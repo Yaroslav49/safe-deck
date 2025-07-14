@@ -107,21 +107,10 @@ export class RolesPageComponent implements OnInit {
    }
 
    protected confirmDeleteRole() {
-      this.dialogs
-         .open<boolean>(TUI_CONFIRM, {
-            label: 'Предупреждение',
-            size: 's',
-            data: {
-               content: 'Вы уверены, что хотите удалить роль? Это действие необратимо',
-               yes: 'Да',
-               no: 'Нет',
-            },
-         })
-         .subscribe(response => {
-            if (response) {
-               this.deleteRole();
-            }
-         })
+      this.alertService.confirmOperation(
+         "Вы уверены, что хотите удалить роль? Это действие необратимо",
+         this.deleteRole
+      )
    }
 
    protected deleteRole() {

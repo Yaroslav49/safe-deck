@@ -12,6 +12,7 @@ import { TuiAutoFocus } from '@taiga-ui/cdk';
 import { SecureDataComponent } from '../../shared/secure-data/secure-data.component';
 import { SecureDataService } from '../../../services/secure-data/secure-data.service';
 import { SecureData } from '../../../shared/model/secure/secure-data.model';
+import { AlertService } from '../../../services/alert-service/alert.service';
 
 @Component({
   selector: 'card',
@@ -24,7 +25,7 @@ export class CardComponent {
    private readonly colorService = inject(ColorService);
    private readonly cardService = inject(CardService);
    private readonly secureDataService = inject(SecureDataService);
-   private readonly dialogs = inject(TuiDialogService);
+   private readonly alertService = inject(AlertService);
 
    private readonly secureDataDialog = tuiDialog(SecureDataComponent, {
       dismissible: true,
@@ -100,21 +101,10 @@ export class CardComponent {
    }
 
    protected confirmDeleteСard() {
-      this.dialogs
-         .open<boolean>(TUI_CONFIRM, {
-            label: 'Предупреждение',
-            size: 's',
-            data: {
-               content: 'Вы уверены, что хотите удалить карточку? Это действие необратимо',
-               yes: 'Да',
-               no: 'Нет',
-            },
-         })
-         .subscribe(response => {
-            if (response) {
-               this.deleteCard();
-            }
-         })
+      this.alertService.confirmOperation(
+         "Вы уверены, что хотите удалить карточку? Это действие необратимо",
+         this.deleteCard
+      )
    }
 
    protected deleteCard() {

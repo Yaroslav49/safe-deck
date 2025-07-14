@@ -22,6 +22,16 @@
    block-size: calc(100vh - 2rem - 4rem - var(--normal-font-size) - 2.75rem);
 }
 
+.info-block {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+
+   padding: 1.5rem 1rem;
+   gap: 1rem;
+}
+
 /* texts */
 
 .title-link {
@@ -41,6 +51,13 @@
 .title-link:hover {
    color: rgb(221, 221, 221);
    cursor: pointer;
+}
+
+.text {
+   color: black;
+   font-family: var(--main-font);
+   font-size: 1.25rem;
+   line-height: 1.25rem;
 }
 
 /* table */
@@ -107,6 +124,12 @@
 .icon {
    width: var(--normal-font-size);
    height: var(--normal-font-size);
+}
+
+.image {
+   height: 50vh;
+   width: auto;
+   object-fit: contain;
 }
 
 /* other */

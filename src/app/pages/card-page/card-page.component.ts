@@ -11,6 +11,7 @@ import { CredentialPair } from '../../shared/model/secure/credential-pair.model'
 import { CreatingCard } from '../../shared/model/cards/creating-card.model';
 import { CardResponce } from '../../shared/model/cards/card-responce.model';
 import { SelectRolesComponent } from '../shared/select-roles/select-roles.component';
+import { AlertService } from '../../services/alert-service/alert.service';
 
 @Component({
    selector: 'card-page',
@@ -24,12 +25,19 @@ export class CardPageComponent implements OnInit {
    private readonly activateRoute = inject(ActivatedRoute);
    private readonly cardService = inject(CardService);
    private readonly router = inject(Router);
+   private readonly alertService = inject(AlertService);
 
    private readonly defaultValues = [
       { name: 'URL', value: '' },
       { name: 'Логин', value: '' },
       { name: 'Пароль', value: '' },
    ] as const
+
+   private readonly errors: Record<string, string> = {
+      '404': 'Роль не найдена',
+      '409': 'Карточка уже существует',
+      '503': 'Проверьте интернет-соединение',
+   }
 
    protected readonly array = new FormArray<FormGroup>([]);
 
@@ -90,7 +98,14 @@ export class CardPageComponent implements OnInit {
                if (result.status == 'ok') {
                   this.router.navigate(['/cards', this.boardId]);
                } else {
-                  // здесь может быть вывод ошибок пользователю
+                  var errorText: string | undefined;
+                  if (result.error) {
+                     errorText = this.errors[result.error];
+                  }
+                  if (!errorText) {
+                     errorText = "Проверьте введённые данные или попробуйте позже";
+                  }
+                  this.alertService.showError(errorText)
                }
             }
          )

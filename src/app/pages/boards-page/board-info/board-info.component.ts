@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { Board } from '../../../shared/model/boards/board.model';
-import { TuiButton, TuiDialogService, TuiIcon } from '@taiga-ui/core';
+import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { BoardService } from '../../../services/board-service/board.service';
 import { BoardResponce } from '../../../shared/model/boards/board-responce.model';
-import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {TuiAutoFocus} from '@taiga-ui/cdk';
+import { AlertService } from '../../../services/alert-service/alert.service';
 
 @Component({
    selector: 'board-info',
@@ -16,7 +16,7 @@ import {TuiAutoFocus} from '@taiga-ui/cdk';
 })
 export class BoardInfoComponent {
    private readonly boardService = inject(BoardService);
-   private readonly dialogs = inject(TuiDialogService);
+   private readonly alertService = inject(AlertService);
 
    board = input.required<Board>();
 
@@ -58,21 +58,10 @@ export class BoardInfoComponent {
    }
 
    protected confirmDeleteBoard() {
-      this.dialogs
-         .open<boolean>(TUI_CONFIRM, {
-            label: 'Предупреждение',
-            size: 's',
-            data: {
-               content: 'Вы уверены, что хотите удалить компанию? Это действие необратимо',
-               yes: 'Да',
-               no: 'Нет',
-            },
-         })
-         .subscribe(response => {
-            if (response) {
-               this.deleteBoard();
-            }
-         })
+      this.alertService.confirmOperation(
+         "Вы уверены, что хотите удалить компанию? Это действие необратимо",
+         this.deleteBoard
+      )
    }
 
    private deleteBoard() {

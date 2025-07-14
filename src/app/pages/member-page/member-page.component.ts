@@ -71,7 +71,6 @@ export class MemberPageComponent implements OnInit {
                   var errorText: string | undefined;
                   if (result.error) {
                      errorText = this.errors[result.error];
-                     console.groupCollapsed(result.error);
                   }
                   if (!errorText) {
                      errorText = "Проверьте введённые данные или попробуйте позже";

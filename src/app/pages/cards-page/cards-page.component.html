@@ -26,7 +26,22 @@
                @for (card of cards; track card.cardId) {
                   <card [card]="card" [boardId]="boardId"></card>
                }
+               @if (accessLevel == "PARTICIPANT" && cards.length == 0) {
+                  <div class="cloud info-block">
+                     <span class="text">Нет доступных карточек для вас</span>
+                     <img src="images/disconnect.png" class="image">
+                     <a class="link" routerLink="/boards">Мои проекты</a>
+                  </div>
+               }
+               @if (accessLevel == "") {
+                  <div class="cloud info-block">
+                     <span class="text">Страница не найдена</span>
+                     <img src="images/disconnect.png" class="image">
+                     <a class="link" routerLink="/boards">Мои проекты</a>
+                  </div>             
+               }
             </div>
+            
             
          </div>     
       </tui-scrollbar>
