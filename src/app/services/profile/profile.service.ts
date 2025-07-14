@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal, WritableSignal } from "@angular/core";
 import { catchError, map, Observable, of } from "rxjs";
 import { UniversalResponce } from "../../shared/model/universal-responce.model";
+import { Profile } from "../../shared/model/profile/profile.model";
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
@@ -14,7 +15,7 @@ export class ProfileService {
 
    public updateProfile() {
       this.getPublicName().subscribe(
-         (publicName: string) => this.publicNameSignal.set(publicName)
+         (profile: Profile) => this.publicNameSignal.set(profile.publicName)
       )
    }
 
@@ -33,7 +34,7 @@ export class ProfileService {
 
    }
 
-   private getPublicName(): Observable<string> {
-      return this.http.get<string>('http://localhost:8080/profile');
+   private getPublicName(): Observable<Profile> {
+      return this.http.get<Profile>('http://localhost:8080/profile');
    }
 }
