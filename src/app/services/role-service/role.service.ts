@@ -77,9 +77,6 @@ export class RoleService {
    }
 
    private getBoardRoles(boardId: number): Observable<RoleCard[]>  {
-      return this.http.get(`http://localhost:8080/roles/${boardId}`)
-      .pipe(
-         map((data: any) => data)
-      );
+      return this.http.get<RoleCard[]>(`http://localhost:8080/roles/${boardId}`);
    }
 }

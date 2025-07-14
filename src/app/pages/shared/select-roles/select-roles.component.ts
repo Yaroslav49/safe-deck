@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { RoleCard } from '../../../shared/model/roles/role.model';
 import { RoleService } from '../../../services/role-service/role.service';
 import { TuiButton, TuiDropdown, TuiIcon } from '@taiga-ui/core';
@@ -8,7 +8,8 @@ import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
    selector: 'select-roles',
    imports: [TuiIcon, TuiButton, TuiDropdown, TuiActiveZone, TuiObscured],
    templateUrl: './select-roles.component.html',
-   styleUrl: './select-roles.component.css'
+   styleUrl: './select-roles.component.css',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectRolesComponent implements OnInit {
    private readonly roleService = inject(RoleService);

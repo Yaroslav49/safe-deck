@@ -34,6 +34,6 @@ export class ProfileService {
    }
 
    private getPublicName(): Observable<string> {
-      return this.http.get('http://localhost:8080/profile').pipe(map((data:any) => data.publicName))
+      return this.http.get<string>('http://localhost:8080/profile');
    }
 }

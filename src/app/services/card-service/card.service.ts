@@ -3,7 +3,6 @@ import { inject, Injectable, signal } from "@angular/core";
 import { catchError, map, Observable, of } from "rxjs";
 import { AccessibleCards } from "../../shared/model/cards/accessible-cards.model";
 import { CardResponce } from "../../shared/model/cards/card-responce.model";
-import { Card } from "../../shared/model/cards/card.model";
 import { UniversalResponce } from "../../shared/model/universal-responce.model";
 import { AccessLevel } from "../../shared/model/cards/access-level.enum";
 import { CreatingCard } from "../../shared/model/cards/creating-card.model";
@@ -25,7 +24,7 @@ export class CardService {
    }
 
    private getAccessibleCards(boardId: number): Observable<AccessibleCards> {
-      return this.http.get(`http://localhost:8080/cards/${boardId}`).pipe(map((data: any) => data));
+      return this.http.get<AccessibleCards>(`http://localhost:8080/cards/${boardId}`);
    }
 
    public renameCard(boardId: number, cardId: number, newCardName: string): Observable<CardResponce> {

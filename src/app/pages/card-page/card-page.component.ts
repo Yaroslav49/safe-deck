@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule, FormArray } from '@angular/forms';
 import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
 import { TuiButton, TuiIcon, TuiScrollbar, TuiTextfield } from '@taiga-ui/core';
@@ -17,7 +17,8 @@ import { SelectRolesComponent } from '../shared/select-roles/select-roles.compon
    imports: [MainMenuComponent, TuiIcon, TuiButton, RouterLink, TuiScrollbar,
       FormsModule, ReactiveFormsModule, TuiTable, TuiTextfield, SelectRolesComponent],
    templateUrl: './card-page.component.html',
-   styleUrl: './card-page.component.css'
+   styleUrl: './card-page.component.css',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardPageComponent implements OnInit {
    private readonly activateRoute = inject(ActivatedRoute);

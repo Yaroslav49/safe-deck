@@ -32,7 +32,7 @@ export class BoardService {
    }
 
    private getUserBoards(): Observable<Board[]>  {
-      return this.http.get("http://localhost:8080/boards").pipe(map((data: any) => data));
+      return this.http.get<Board[]>("http://localhost:8080/boards");
    }
 
    public createBoard(boardName: string): Observable<BoardResponce> {

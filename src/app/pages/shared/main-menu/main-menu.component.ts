@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { TuiButton, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
 import {TuiAvatar} from '@taiga-ui/kit';
-import { Board } from '../../../shared/model/boards/board.model';
 import { BoardService } from '../../../services/board-service/board.service';
 import { Router, RouterLink } from '@angular/router';
 import { ColorService } from '../../../services/color-service/color.service';

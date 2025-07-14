@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TuiButton, TuiDialogService, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
 import { RoleService } from '../../services/role-service/role.service';
 import { CardService } from '../../services/card-service/card.service';
@@ -18,7 +18,8 @@ import { AlertService } from '../../services/alert-service/alert.service';
   selector: 'app-roles-page',
   imports: [MainMenuComponent, RouterLink, TuiIcon, TuiButton, TuiAutoFocus, TuiCheckbox, ReactiveFormsModule, TuiScrollbar],
   templateUrl: './roles-page.component.html',
-  styleUrl: './roles-page.component.css'
+  styleUrl: './roles-page.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RolesPageComponent implements OnInit {
    private readonly activateRoute = inject(ActivatedRoute);
