@@ -109,7 +109,7 @@ export class RolesPageComponent implements OnInit {
    protected confirmDeleteRole() {
       this.alertService.confirmOperation(
          "Вы уверены, что хотите удалить роль? Это действие необратимо",
-         this.deleteRole
+         this.deleteRole.bind(this)
       )
    }
 

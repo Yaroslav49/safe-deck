@@ -59,8 +59,8 @@ export class BoardInfoComponent {
 
    protected confirmDeleteBoard() {
       this.alertService.confirmOperation(
-         "Вы уверены, что хотите удалить компанию? Это действие необратимо",
-         this.deleteBoard
+         "Вы уверены, что хотите удалить проект? Это действие необратимо",
+         this.deleteBoard.bind(this)
       )
    }
 

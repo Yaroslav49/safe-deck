@@ -103,7 +103,7 @@ export class CardComponent {
    protected confirmDeleteСard() {
       this.alertService.confirmOperation(
          "Вы уверены, что хотите удалить карточку? Это действие необратимо",
-         this.deleteCard
+         this.deleteCard.bind(this)
       )
    }
 
