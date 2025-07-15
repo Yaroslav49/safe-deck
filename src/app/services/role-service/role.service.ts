@@ -4,10 +4,12 @@ import { RoleCard } from "../../shared/model/roles/role.model";
 import { catchError, map, Observable, of } from "rxjs";
 import { RoleResponce } from "../../shared/model/roles/role-responce.model";
 import { Card } from "../../shared/model/cards/card.model";
+import { environment } from "../../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class RoleService {
    private readonly http = inject(HttpClient);
+   private readonly apiUrl = environment.apiUrl;
    private rolesSignal = signal<RoleCard[]>([]);
 
    public get boardRoles() {
@@ -21,7 +23,7 @@ export class RoleService {
    }
 
    public createRole(boardId: number, roleName: string): Observable<RoleResponce> {
-      return this.http.post<any>(`http://localhost:8080/roles/${boardId}`, {roleName})
+      return this.http.post<any>(`${this.apiUrl}/roles/${boardId}`, {roleName})
       .pipe(
          map(
             role => {
@@ -37,7 +39,7 @@ export class RoleService {
    }
 
    public renameRole(boardId: number, roleId: number, newRoleName: string): Observable<RoleResponce> {
-      return this.http.patch<any>(`http://localhost:8080/roles/${boardId}/rename/${roleId}`, {newRoleName})
+      return this.http.patch<any>(`${this.apiUrl}/roles/${boardId}/rename/${roleId}`, {newRoleName})
       .pipe(
          map(
             role => {
@@ -53,7 +55,7 @@ export class RoleService {
    }
 
    public deleteRole(boardId: number, roleId: number): Observable<number> {
-      return this.http.delete<any>(`http://localhost:8080/roles/${boardId}/${roleId}`)
+      return this.http.delete<any>(`${this.apiUrl}/roles/${boardId}/${roleId}`)
       .pipe(
          map(
             () => 200
@@ -65,7 +67,7 @@ export class RoleService {
    }
 
    public updateCardsRole(boardId: number, roleId: number, cards: Card[]): Observable<number> {
-      return this.http.patch<any>(`http://localhost:8080/roles/${boardId}/${roleId}`, cards)
+      return this.http.patch<any>(`${this.apiUrl}/roles/${boardId}/${roleId}`, cards)
       .pipe(
          map(
             () => 200
@@ -77,6 +79,6 @@ export class RoleService {
    }
 
    public getBoardRoles(boardId: number): Observable<RoleCard[]>  {
-      return this.http.get<RoleCard[]>(`http://localhost:8080/roles/${boardId}`);
+      return this.http.get<RoleCard[]>(`${this.apiUrl}/roles/${boardId}`);
    }
 }

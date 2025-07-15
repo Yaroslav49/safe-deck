@@ -3,10 +3,12 @@ import { inject, Injectable, signal, WritableSignal } from "@angular/core";
 import { catchError, map, Observable, of } from "rxjs";
 import { UniversalResponce } from "../../shared/model/universal-responce.model";
 import { Profile } from "../../shared/model/profile/profile.model";
+import { environment } from "../../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
    private readonly http = inject(HttpClient);
+   private readonly apiUrl = environment.apiUrl;
    private publicNameSignal = signal<string>('Аноним');
 
    public get publicName(): WritableSignal<string> {
@@ -20,7 +22,7 @@ export class ProfileService {
    }
 
    public changePublicName(newPublicName: string): Observable<UniversalResponce> {
-      return this.http.put<any>('http://localhost:8080/profile', {newPublicName})
+      return this.http.put<any>(`${this.apiUrl}/profile`, {newPublicName})
          .pipe(
             map(
                () => {return {status: 'ok'}}
@@ -35,6 +37,6 @@ export class ProfileService {
    }
 
    private getPublicName(): Observable<Profile> {
-      return this.http.get<Profile>('http://localhost:8080/profile');
+      return this.http.get<Profile>(`${this.apiUrl}/profile`);
    }
 }

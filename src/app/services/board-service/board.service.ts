@@ -4,10 +4,12 @@ import { Board } from "../../shared/model/boards/board.model";
 import { map } from "rxjs/internal/operators/map";
 import { catchError, Observable, of } from "rxjs";
 import { BoardResponce } from "../../shared/model/boards/board-responce.model";
+import { environment } from "../../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class BoardService {
    private readonly http = inject(HttpClient);
+   private readonly apiUrl = environment.apiUrl;
 
    private boardsSignal = signal<Board[]>([]);
 
@@ -32,11 +34,11 @@ export class BoardService {
    }
 
    private getUserBoards(): Observable<Board[]>  {
-      return this.http.get<Board[]>("http://localhost:8080/boards");
+      return this.http.get<Board[]>(`${this.apiUrl}/boards`);
    }
 
    public createBoard(boardName: string): Observable<BoardResponce> {
-      return this.http.post<any>("http://localhost:8080/boards", {boardName})
+      return this.http.post<any>(`${this.apiUrl}/boards`, {boardName})
       .pipe(
          map(
             board => {
@@ -52,7 +54,7 @@ export class BoardService {
    }
 
    public deleteBoard(boardId: number): Observable<string> {
-      return this.http.delete<any>(`http://localhost:8080/boards/${boardId}/delete`)
+      return this.http.delete<any>(`${this.apiUrl}/boards/${boardId}/delete`)
       .pipe(
          map(
             () => 'ok'
@@ -66,7 +68,7 @@ export class BoardService {
    }
 
    public renameBoard(boardId: number, newBoardName: string): Observable<BoardResponce> {
-      return this.http.patch<any>(`http://localhost:8080/boards/${boardId}/rename`, {newBoardName})
+      return this.http.patch<any>(`${this.apiUrl}/boards/${boardId}/rename`, {newBoardName})
       .pipe(
          map(
             board => {

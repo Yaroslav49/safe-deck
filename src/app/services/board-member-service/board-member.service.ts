@@ -5,10 +5,12 @@ import { catchError, map, Observable, of } from "rxjs";
 import { RoleCard } from "../../shared/model/roles/role.model";
 import { BoardMemberResponce } from "../../shared/model/board-members/member-responce.model";
 import { UniversalResponce } from "../../shared/model/universal-responce.model";
+import { environment } from "../../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class BoardMemberService {
    private readonly http = inject(HttpClient);
+   private readonly apiUrl = environment.apiUrl;
 
    private membersSignal = signal<BoardMember[]>([]);
 
@@ -19,7 +21,7 @@ export class BoardMemberService {
    }
 
    public addBoardMember(boardId: number, email: string, roles: RoleCard[]): Observable<BoardMemberResponce> {
-      return this.http.post<any>(`http://localhost:8080/board-members/${boardId}`, {email, roles})
+      return this.http.post<any>(`${this.apiUrl}/board-members/${boardId}`, {email, roles})
       .pipe(
          map(
             boardMember => {
@@ -36,7 +38,7 @@ export class BoardMemberService {
    }
 
    public deleteBoardMember(boardId: number, userId: number): Observable<UniversalResponce> {
-      return this.http.delete<any>(`http://localhost:8080/board-members/${boardId}/${userId}`)
+      return this.http.delete<any>(`${this.apiUrl}/board-members/${boardId}/${userId}`)
       .pipe(
          map(
             () => {
@@ -53,7 +55,7 @@ export class BoardMemberService {
    }
 
    public updateBoardMember(boardId: number, memberId: number, roles: RoleCard[]): Observable<BoardMemberResponce> {
-      return this.http.patch<any>(`http://localhost:8080/board-members/${boardId}/${memberId}`, roles)
+      return this.http.patch<any>(`${this.apiUrl}/board-members/${boardId}/${memberId}`, roles)
       .pipe(
          map(
             boardMember => {
@@ -70,7 +72,7 @@ export class BoardMemberService {
    }
 
    public getBoardMemberById(boardId: number, memberId: number): Observable<BoardMember> {
-      return this.http.get<BoardMember>(`http://localhost:8080/board-members/${boardId}/${memberId}`);
+      return this.http.get<BoardMember>(`${this.apiUrl}/board-members/${boardId}/${memberId}`);
    }
 
    public get boardMembers() {
@@ -78,6 +80,6 @@ export class BoardMemberService {
    }
 
    private getBoardMembers(boardId: number): Observable<BoardMember[]>  {
-      return this.http.get<BoardMember[]>(`http://localhost:8080/board-members/${boardId}`);
+      return this.http.get<BoardMember[]>(`${this.apiUrl}/board-members/${boardId}`);
    }
 }

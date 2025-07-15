@@ -3,10 +3,12 @@ import { inject, Injectable } from "@angular/core";
 import { catchError, map, Observable, of } from "rxjs";
 import { jwtDecode } from 'jwt-decode';
 import { Role } from "../../shared/model/role.enum";
+import { environment } from "../../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {
    private readonly http = inject(HttpClient);
+   private readonly apiUrl = environment.apiUrl;
    
    isLoggedIn: boolean;
    loginName: string = '';
@@ -28,7 +30,7 @@ export class AuthorizationService {
    }
 
    generateRegisterCode(email: string): Observable<number> {
-      return this.http.post<any>('http://localhost:8080/auth/generate-register-code', {email})
+      return this.http.post<any>(`${this.apiUrl}/auth/generate-register-code`, {email})
          .pipe(
             map(() => {
                return 200;
@@ -41,7 +43,7 @@ export class AuthorizationService {
    }
 
    generate2FACode(email: string): Observable<boolean> {
-      return this.http.post<any>('http://localhost:8080/auth/generate-2fa-code', {email})
+      return this.http.post<any>(`${this.apiUrl}/auth/generate-2fa-code`, {email})
          .pipe(
             map(() => {
                return true;
@@ -56,7 +58,7 @@ export class AuthorizationService {
    login(login: string, password: string, generatedCode: string): Observable<boolean> {
       var body = { email: login, password, generatedCode };
       console.log("login start");
-      return this.http.post<any>('http://localhost:8080/auth/login', body)
+      return this.http.post<any>(`${this.apiUrl}/auth/login`, body)
          .pipe(
             map(response => {
                localStorage.setItem('jwt', response.token);
@@ -83,7 +85,7 @@ export class AuthorizationService {
 
    register(login: string, password: string, publicName: string, generatedCode: string): Observable<number> {
       var body = { email: login, password, publicName, generatedCode };
-      return this.http.post<any>('http://localhost:8080/auth/register', body)
+      return this.http.post<any>(`${this.apiUrl}/auth/register`, body)
          .pipe(
             map(response => {
                localStorage.setItem('jwt', response.token);

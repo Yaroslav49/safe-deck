@@ -4,7 +4,7 @@ import {TuiAvatar} from '@taiga-ui/kit';
 import { BoardService } from '../../../services/board-service/board.service';
 import { Router, RouterLink } from '@angular/router';
 import { ColorService } from '../../../services/color-service/color.service';
-import { ProfileService } from '../../../services/profile/profile.service';
+import { ProfileService } from '../../../services/profile-service/profile.service';
 
 @Component({
   selector: 'main-menu',

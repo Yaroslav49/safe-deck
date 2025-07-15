@@ -6,10 +6,12 @@ import { CardResponce } from "../../shared/model/cards/card-responce.model";
 import { UniversalResponce } from "../../shared/model/universal-responce.model";
 import { AccessLevel } from "../../shared/model/cards/access-level.enum";
 import { CreatingCard } from "../../shared/model/cards/creating-card.model";
+import { environment } from "../../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class CardService {
    private readonly http = inject(HttpClient);
+   private readonly apiUrl = environment.apiUrl;
    private accessibleCardsSignal = signal<AccessibleCards>({accessibleCards: [], accessLevel: AccessLevel.GUEST});
 
    public getAccessibleCardsSignal() {
@@ -24,11 +26,11 @@ export class CardService {
    }
 
    private getAccessibleCards(boardId: number): Observable<AccessibleCards> {
-      return this.http.get<AccessibleCards>(`http://localhost:8080/cards/${boardId}`);
+      return this.http.get<AccessibleCards>(`${this.apiUrl}/cards/${boardId}`);
    }
 
    public renameCard(boardId: number, cardId: number, newCardName: string): Observable<CardResponce> {
-      return this.http.patch<any>(`http://localhost:8080/cards/rename/${boardId}/${cardId}`, {newCardName})
+      return this.http.patch<any>(`${this.apiUrl}/cards/rename/${boardId}/${cardId}`, {newCardName})
          .pipe(
             map(
                card => {
@@ -44,7 +46,7 @@ export class CardService {
    }
 
    public createCard(boardId: number, card: CreatingCard): Observable<CardResponce> {
-      return this.http.post<any>(`http://localhost:8080/cards/${boardId}`, card)
+      return this.http.post<any>(`${this.apiUrl}/cards/${boardId}`, card)
          .pipe(
             map(
                card => {
@@ -60,7 +62,7 @@ export class CardService {
    }
 
    public changeDescriptionCard(boardId: number, cardId: number, newCardDescription: string): Observable<CardResponce> {
-      return this.http.patch<any>(`http://localhost:8080/cards/change-description/${boardId}/${cardId}`, {newCardDescription})
+      return this.http.patch<any>(`${this.apiUrl}/cards/change-description/${boardId}/${cardId}`, {newCardDescription})
          .pipe(
             map(
                card => {
@@ -76,7 +78,7 @@ export class CardService {
    }
 
    public deleteCard(boardId: number, cardId: number): Observable<UniversalResponce> {
-      return this.http.delete<any>(`http://localhost:8080/cards/${boardId}/${cardId}`)
+      return this.http.delete<any>(`${this.apiUrl}/cards/${boardId}/${cardId}`)
          .pipe(
             map(
                () => {return {status: 'ok'}}

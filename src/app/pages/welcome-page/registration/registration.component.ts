@@ -6,7 +6,7 @@ import { TuiButton, TuiDialogContext } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { DialogAuthorizationService } from '../dialog-authorization/dialog-authorization.service';
 import { RegisterData } from '../../../shared/model/auth/register.model';
-import { ProfileService } from '../../../services/profile/profile.service';
+import { ProfileService } from '../../../services/profile-service/profile.service';
 
 @Component({
   selector: 'app-registration',

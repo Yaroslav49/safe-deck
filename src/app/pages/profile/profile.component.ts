@@ -4,7 +4,7 @@ import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
 import { Router } from '@angular/router';
-import { ProfileService } from '../../services/profile/profile.service';
+import { ProfileService } from '../../services/profile-service/profile.service';
 import { ColorService } from '../../services/color-service/color.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UniversalResponce } from '../../shared/model/universal-responce.model';
