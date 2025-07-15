@@ -21,15 +21,15 @@ export class SelectRolesComponent implements OnInit {
    protected openDropDown = false;
 
    ngOnInit() {
-      this.roleService.updateBoardRoles(this.boardId());
-      /*this.roleService.getBoardRoles(this.boardId())
+      //this.roleService.updateBoardRoles(this.boardId());
+      this.roleService.getBoardRoles(this.boardId())
       .subscribe(
          (roles: RoleCard[]) => {
             this.roles.set(
-               roles.filter(role => role.)
+               roles.filter(role => role.cards && role.cards.length > 0)
             )
          }
-      )*/
+      )
    }
 
    public getSelectedRoles(): RoleCard[] {
