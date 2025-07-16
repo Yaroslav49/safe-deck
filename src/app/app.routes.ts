@@ -8,6 +8,7 @@ import { CardPageComponent } from './pages/card-page/card-page.component';
 import { RolesPageComponent } from './pages/roles-page/roles-page.component';
 import { MembersPageComponent } from './pages/members-page/members-page.component';
 import { MemberPageComponent } from './pages/member-page/member-page.component';
+import { PasswordGeneratorComponent } from './pages/password-generator/password-generator.component';
 
 export const routes: Routes = [
    {path: 'boards', component: BoardsPageComponent, canActivate: [RouteGuardAuth]},
@@ -17,5 +18,6 @@ export const routes: Routes = [
    {path: 'cards/:board-id', component: CardsPageComponent, canActivate: [RouteGuardAuth]},
    {path: 'card/:board-id/:card-id', component: CardPageComponent, canActivate: [RouteGuardAuth]},
    {path: 'profile', component: ProfileComponent, canActivate: [RouteGuardAuth]},
+   {path: 'password-generator', component: PasswordGeneratorComponent},
    {path: '**', component: WelcomePageComponent},
 ];
