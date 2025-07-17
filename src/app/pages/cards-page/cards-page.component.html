@@ -6,7 +6,7 @@
          <span class="title">{{ boardName() }}</span>
          <div class="horizontal-list big-gap">
             @if (accessLevel == "OWNER") {
-               <a class="title-link">Журнал просмотров</a>
+               <a class="title-link" routerLink="/logs/{{boardId}}">Журнал просмотров</a>
                <a class="title-link" routerLink="/roles/{{boardId}}">Управление ролями</a>
                <a class="title-link" routerLink="/members/{{boardId}}">Управление доступом</a>
             }
