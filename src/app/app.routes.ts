@@ -10,9 +10,11 @@ import { MembersPageComponent } from './pages/members-page/members-page.componen
 import { MemberPageComponent } from './pages/member-page/member-page.component';
 import { PasswordGeneratorComponent } from './pages/password-generator/password-generator.component';
 import { LogsComponent } from './pages/logs/logs.component';
+import { SendSecureViewComponent } from './pages/send-secure-view/send-secure-view.component';
 
 export const routes: Routes = [
    {path: 'boards', component: BoardsPageComponent, canActivate: [RouteGuardAuth]},
+   {path: 'send-secure/:token', component: SendSecureViewComponent},
    {path: 'roles/:board-id', component: RolesPageComponent, canActivate: [RouteGuardAuth]},
    {path: 'logs/:board-id', component: LogsComponent, canActivate: [RouteGuardAuth]},
    {path: 'members/:board-id', component: MembersPageComponent, canActivate: [RouteGuardAuth]},

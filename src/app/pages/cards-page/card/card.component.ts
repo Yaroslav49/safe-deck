@@ -13,6 +13,7 @@ import { SecureDataComponent } from '../../shared/secure-data/secure-data.compon
 import { SecureDataService } from '../../../services/secure-data/secure-data.service';
 import { SecureData } from '../../../shared/model/secure/secure-data.model';
 import { AlertService } from '../../../services/alert-service/alert.service';
+import { SendSecureComponent } from '../../shared/send-secure/send-secure.component';
 
 @Component({
   selector: 'card',
@@ -32,6 +33,11 @@ export class CardComponent {
       size: 's',
    });
 
+   private readonly sendSecureDialog = tuiDialog(SendSecureComponent, {
+      dismissible: true,
+      size: 's',
+   });
+
    card = input.required<Card>();
    boardId = input.required<number>();
 
@@ -42,7 +48,7 @@ export class CardComponent {
    protected isDescriptionEdited = signal<boolean>(false);
 
    protected selectMenuOption(numberOption: number) {
-      const menuOptions = [this.startEditName, this.startEditDescription, this.confirmDeleteСard];
+      const menuOptions = [this.startEditName, this.startEditDescription, this.confirmDeleteСard, this.showSendSecure];
       menuOptions[numberOption].call(this);
    }
 
@@ -134,6 +140,10 @@ export class CardComponent {
             }).subscribe();
          }
       )
+   }
+
+   protected showSendSecure() {
+      this.sendSecureDialog(this.card().cardId).subscribe();
    }
    
    protected selectInputText(event: FocusEvent) {
