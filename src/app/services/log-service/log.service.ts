@@ -3,7 +3,7 @@ import { Injectable, inject, signal } from "@angular/core";
 import { environment } from "../../../environments/environment";
 import { LogData } from "../../shared/model/log/log.model";
 import { StatusMember } from "../../shared/model/status-member.enum";
-import { map } from "rxjs";
+import { map, Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class LogService {
@@ -35,7 +35,7 @@ export class LogService {
       ])
    }
 
-   private getBoardLogs(boardId: number) {
+   private getBoardLogs(boardId: number): Observable<LogData[]> {
       return this.http.get<LogData[]>(`${this.apiUrl}/logs/${boardId}`)
       .pipe(
          map(events => events.map(log => ({

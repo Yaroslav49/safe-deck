@@ -25,7 +25,6 @@ export class SendSecureService {
          )
       )
    }
-
    
    public getSendSecureData(token: string): Observable<SendSecureData> {
       return this.http.get<SendSecureData>(`${this.apiUrl}/send-secure/${token}`);

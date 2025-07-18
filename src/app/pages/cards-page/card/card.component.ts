@@ -6,14 +6,19 @@ import { CardService } from '../../../services/card-service/card.service';
 import { CardResponce } from '../../../shared/model/cards/card-responce.model';
 import { CardMenuComponent } from './card-menu/card-menu.component';
 import { UniversalResponce } from '../../../shared/model/universal-responce.model';
-import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
 import { SecureDataComponent } from '../../shared/secure-data/secure-data.component';
 import { SecureDataService } from '../../../services/secure-data/secure-data.service';
-import { SecureData } from '../../../shared/model/secure/secure-data.model';
 import { AlertService } from '../../../services/alert-service/alert.service';
 import { SendSecureComponent } from '../../shared/send-secure/send-secure.component';
+import { ControlQuestionComponent } from '../../shared/control-question/control-question.component';
+import { SecureDataResponce } from '../../../shared/model/secure/secure-data-responce.model';
+import { ControlQuestionService } from '../../../services/control-questions/control-questions.service';
+import { Question } from '../../../shared/model/question/question.model';
+import { FullQuestion } from '../../../shared/model/question/full-question.model';
+import { AuthorizationService } from '../../../services/authorization/authorization.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'card',
@@ -27,6 +32,9 @@ export class CardComponent {
    private readonly cardService = inject(CardService);
    private readonly secureDataService = inject(SecureDataService);
    private readonly alertService = inject(AlertService);
+   private readonly questionsService = inject(ControlQuestionService);
+   private readonly authService = inject(AuthorizationService);
+   private readonly router = inject(Router);
 
    private readonly secureDataDialog = tuiDialog(SecureDataComponent, {
       dismissible: true,
@@ -34,6 +42,11 @@ export class CardComponent {
    });
 
    private readonly sendSecureDialog = tuiDialog(SendSecureComponent, {
+      dismissible: true,
+      size: 's',
+   });
+
+   private readonly controlQuestionDialog = tuiDialog(ControlQuestionComponent, {
       dismissible: true,
       size: 's',
    });
@@ -132,12 +145,31 @@ export class CardComponent {
    protected showSecureData() {
       this.secureDataService.getSecureData(this.card().cardId)
       .subscribe(
-         (secureData: SecureData) => {
-            this.secureDataDialog({
-               cardId: this.card().cardId,
-               cardName: this.card().cardName,
-               credentials: secureData.credentials
-            }).subscribe();
+         (responce: SecureDataResponce) => {
+            if (responce.status == "ok") {
+               this.secureDataDialog({
+                  cardId: this.card().cardId,
+                  cardName: this.card().cardName,
+                  credentials: responce.secureData?.credentials || []
+               }).subscribe();
+            } else {
+               if (responce.errorCode == 418) {
+                  this.questionsService.getRandomQuestion(this.boardId())
+                  .subscribe(
+                     (question: Question) => {
+                        const fullQuestion: FullQuestion = {
+                           question, boardId: this.boardId(), cardId: this.card().cardId
+                        }
+                        this.controlQuestionDialog(fullQuestion).subscribe();
+                     }
+                  )
+               } else if (responce.errorCode == 423) {
+                  this.authService.logout();
+                  this.router.navigateByUrl("/")
+               } else {
+                  this.alertService.showError("Неизвестная ошибка");
+               }
+            }         
          }
       )
    }
