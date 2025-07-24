@@ -2,12 +2,11 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
-import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
 import { LogService } from '../../services/log-service/log.service';
 
 @Component({
   selector: 'app-logs',
-  imports: [MainMenuComponent, RouterLink, TuiIcon, TuiButton, TuiTable, TuiScrollbar],
+  imports: [RouterLink, TuiIcon, TuiButton, TuiTable, TuiScrollbar],
   templateUrl: './logs.component.html',
   styleUrl: './logs.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

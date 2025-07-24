@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, QueryList, ViewChildren } from '@angular/core';
-import { MainMenuComponent } from "../shared/main-menu/main-menu.component";
 import { BoardInfoComponent } from './board-info/board-info.component';
 import { BoardService } from '../../services/board-service/board.service';
 import { TuiIcon, TuiScrollbar } from '@taiga-ui/core';
@@ -7,7 +6,7 @@ import { BoardResponce } from '../../shared/model/boards/board-responce.model';
 
 @Component({
   selector: 'boards-page',
-  imports: [MainMenuComponent, BoardInfoComponent, TuiIcon, TuiScrollbar],
+  imports: [BoardInfoComponent, TuiIcon, TuiScrollbar],
   templateUrl: './boards-page.component.html',
   styleUrl: './boards-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

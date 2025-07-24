@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TuiButton, TuiDialogService, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
 import { RoleService } from '../../services/role-service/role.service';
@@ -8,7 +7,6 @@ import { AccessLevel } from '../../shared/model/cards/access-level.enum';
 import { Card } from '../../shared/model/cards/card.model';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
-import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { RoleResponce } from '../../shared/model/roles/role-responce.model';
 import { RoleCard } from '../../shared/model/roles/role.model';
 import { TuiCheckbox } from '@taiga-ui/kit';
@@ -16,7 +14,7 @@ import { AlertService } from '../../services/alert-service/alert.service';
 
 @Component({
   selector: 'app-roles-page',
-  imports: [MainMenuComponent, RouterLink, TuiIcon, TuiButton, TuiAutoFocus, TuiCheckbox, ReactiveFormsModule, TuiScrollbar],
+  imports: [RouterLink, TuiIcon, TuiButton, TuiAutoFocus, TuiCheckbox, ReactiveFormsModule, TuiScrollbar],
   templateUrl: './roles-page.component.html',
   styleUrl: './roles-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -25,7 +23,6 @@ export class RolesPageComponent implements OnInit {
    private readonly activateRoute = inject(ActivatedRoute);
    private readonly roleService = inject(RoleService);
    private readonly cardService = inject(CardService);
-   private readonly dialogs = inject(TuiDialogService);
    private readonly formBuilder = inject(FormBuilder);
    private readonly alertService = inject(AlertService);
 

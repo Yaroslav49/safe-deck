@@ -15,7 +15,7 @@ import { AlertService } from '../../services/alert-service/alert.service';
 
 @Component({
    selector: 'card-page',
-   imports: [MainMenuComponent, TuiIcon, TuiButton, RouterLink, TuiScrollbar,
+   imports: [TuiIcon, TuiButton, RouterLink, TuiScrollbar,
       FormsModule, ReactiveFormsModule, TuiTable, TuiTextfield, SelectRolesComponent],
    templateUrl: './card-page.component.html',
    styleUrl: './card-page.component.css',
@@ -96,7 +96,7 @@ export class CardPageComponent implements OnInit {
          .subscribe(
             (result: CardResponce) => {
                if (result.status == 'ok') {
-                  this.router.navigate(['/cards', this.boardId]);
+                  this.router.navigate(['/main/cards', this.boardId]);
                } else {
                   var errorText: string | undefined;
                   if (result.error) {

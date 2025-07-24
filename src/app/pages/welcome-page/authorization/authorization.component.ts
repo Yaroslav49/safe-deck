@@ -69,7 +69,7 @@ export class AuthorizationComponent {
       .subscribe(
          (result: boolean) => {
             if (result) {
-               this.router.navigate(['/boards']);
+               this.router.navigateByUrl('/main/boards');
             } else {
                this.error.set('Ошибка: аккаунт с таким логином и паролем не найден');
             }

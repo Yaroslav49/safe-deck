@@ -31,7 +31,8 @@ export class ControlQuestionComponent {
       const cardId = this.context.data.cardId;
       this.questionService.checkAnswer(questionId, givenAnswer, boardId, cardId)
       .subscribe(
-         () => {
+         (result) => {
+            console.log(result);
             this.context.completeWith();
          }
       )

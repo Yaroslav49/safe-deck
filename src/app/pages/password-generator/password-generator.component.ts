@@ -2,12 +2,11 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiIcon, TuiButton } from '@taiga-ui/core';
 import { TuiCheckbox } from '@taiga-ui/kit';
-import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
 import { AlertService } from '../../services/alert-service/alert.service';
 
 @Component({
    selector: 'password-generator',
-   imports: [MainMenuComponent, TuiIcon, TuiButton, TuiCheckbox, ReactiveFormsModule],
+   imports: [TuiIcon, TuiButton, TuiCheckbox, ReactiveFormsModule],
    templateUrl: './password-generator.component.html',
    styleUrl: './password-generator.component.css',
    changeDetection: ChangeDetectionStrategy.OnPush

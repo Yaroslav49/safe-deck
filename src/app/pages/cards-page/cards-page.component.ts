@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
-import { tuiDialog, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
+import { TuiIcon, TuiScrollbar } from '@taiga-ui/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Card } from '../../shared/model/cards/card.model';
 import { CardComponent } from './card/card.component';
@@ -10,7 +9,7 @@ import { BoardService } from '../../services/board-service/board.service';
 
 @Component({
   selector: 'cards-page',
-  imports: [MainMenuComponent, TuiScrollbar, TuiIcon, CardComponent, RouterLink],
+  imports: [TuiScrollbar, TuiIcon, CardComponent, RouterLink],
   templateUrl: './cards-page.component.html',
   styleUrl: './cards-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

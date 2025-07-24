@@ -17,7 +17,9 @@
          <span class="title" (dblclick)="startEditName()"> {{card().cardName}} </span>
       }
       
-      <card-menu (selectMenuOption)="selectMenuOption($event)"></card-menu>
+      @if (accessLevel == "OWNER") {
+         <card-menu (selectMenuOption)="selectMenuOption($event)"></card-menu>
+      }
    </div>
    
    @if (isDescriptionEdited()) {

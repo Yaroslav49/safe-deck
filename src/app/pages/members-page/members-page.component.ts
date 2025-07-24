@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TuiButton, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
-import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
 import { BoardMemberService } from '../../services/board-member-service/board-member.service';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { AlertService } from '../../services/alert-service/alert.service';
@@ -9,7 +8,7 @@ import { UniversalResponce } from '../../shared/model/universal-responce.model';
 
 @Component({
   selector: 'app-members-page',
-  imports: [MainMenuComponent, RouterLink, TuiIcon, TuiButton, TuiTable, TuiScrollbar],
+  imports: [RouterLink, TuiIcon, TuiButton, TuiTable, TuiScrollbar],
   templateUrl: './members-page.component.html',
   styleUrl: './members-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

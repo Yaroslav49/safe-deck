@@ -12,7 +12,7 @@ import { TuiAutoFocus } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-profile',
-  imports: [MainMenuComponent, TuiAvatar, TuiButton, TuiIcon, TuiAutoFocus, ReactiveFormsModule],
+  imports: [TuiAvatar, TuiButton, TuiIcon, TuiAutoFocus, ReactiveFormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

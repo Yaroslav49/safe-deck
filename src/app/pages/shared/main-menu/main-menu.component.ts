@@ -31,7 +31,7 @@ export class MainMenuComponent implements OnInit {
       let board = this.boards().find(board => board.boardId == boardId);
       if (board) {
          this.boardService.updateCurrentBoardName(board.boardName);
-         this.router.navigate(['/cards', board.boardId]);
+         this.router.navigate(['/main/cards', board.boardId]);
       }    
    }
 

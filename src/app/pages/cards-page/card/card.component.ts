@@ -19,6 +19,7 @@ import { Question } from '../../../shared/model/question/question.model';
 import { FullQuestion } from '../../../shared/model/question/full-question.model';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
 import { Router } from '@angular/router';
+import { AccessLevel } from '../../../shared/model/cards/access-level.enum';
 
 @Component({
   selector: 'card',
@@ -53,6 +54,12 @@ export class CardComponent {
 
    card = input.required<Card>();
    boardId = input.required<number>();
+
+   protected get accessLevel(): AccessLevel {
+      return this.AccessibleCards().accessLevel;
+   }
+
+   private AccessibleCards = this.cardService.getAccessibleCardsSignal();
 
    protected cardName = new FormControl('');
    protected cardDescription = new FormControl('');

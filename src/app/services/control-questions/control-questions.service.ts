@@ -21,6 +21,8 @@ export class ControlQuestionService {
             ),
             catchError(
                responce => {
+                  console.log("Ошибка контрольных вопросов!");
+                  console.log(responce);
                   return of({status: 'error', error: responce.status});
                }
             )

@@ -11,17 +11,20 @@ import { MemberPageComponent } from './pages/member-page/member-page.component';
 import { PasswordGeneratorComponent } from './pages/password-generator/password-generator.component';
 import { LogsComponent } from './pages/logs/logs.component';
 import { SendSecureViewComponent } from './pages/send-secure-view/send-secure-view.component';
+import { MainPageComponent } from './pages/main-page/main-page.component';
 
 export const routes: Routes = [
-   {path: 'boards', component: BoardsPageComponent, canActivate: [RouteGuardAuth]},
+   {path: 'main', component: MainPageComponent, canActivate: [RouteGuardAuth], children: [
+      {path: 'boards', component: BoardsPageComponent},
+      {path: 'profile', component: ProfileComponent},
+      {path: 'password-generator', component: PasswordGeneratorComponent},
+      {path: 'cards/:board-id', component: CardsPageComponent},
+      {path: 'card/:board-id/:card-id', component: CardPageComponent},
+      {path: 'roles/:board-id', component: RolesPageComponent},
+      {path: 'logs/:board-id', component: LogsComponent},
+      {path: 'members/:board-id', component: MembersPageComponent},
+      {path: 'member/:board-id/:member-id', component: MemberPageComponent},
+   ]},
    {path: 'send-secure/:token', component: SendSecureViewComponent},
-   {path: 'roles/:board-id', component: RolesPageComponent, canActivate: [RouteGuardAuth]},
-   {path: 'logs/:board-id', component: LogsComponent, canActivate: [RouteGuardAuth]},
-   {path: 'members/:board-id', component: MembersPageComponent, canActivate: [RouteGuardAuth]},
-   {path: 'member/:board-id/:member-id', component: MemberPageComponent, canActivate: [RouteGuardAuth]},
-   {path: 'cards/:board-id', component: CardsPageComponent, canActivate: [RouteGuardAuth]},
-   {path: 'card/:board-id/:card-id', component: CardPageComponent, canActivate: [RouteGuardAuth]},
-   {path: 'profile', component: ProfileComponent, canActivate: [RouteGuardAuth]},
-   {path: 'password-generator', component: PasswordGeneratorComponent},
    {path: '**', component: WelcomePageComponent},
 ];

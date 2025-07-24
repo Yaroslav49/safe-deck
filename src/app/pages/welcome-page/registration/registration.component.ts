@@ -86,7 +86,7 @@ export class RegistrationComponent {
          (resultCode: number) => {
             if (resultCode == 200) {
                this.error.set('');
-               this.router.navigate(['/boards']);
+               this.router.navigateByUrl('/main/boards');
                this.context.completeWith();
             } else {
                var errorText: string | undefined = this.errors[resultCode];

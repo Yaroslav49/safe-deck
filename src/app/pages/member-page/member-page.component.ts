@@ -1,19 +1,17 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TuiButton, TuiDialogService, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
-import { MainMenuComponent } from '../shared/main-menu/main-menu.component';
+import { TuiButton, TuiIcon, TuiScrollbar } from '@taiga-ui/core';
 import { SelectRolesComponent } from '../shared/select-roles/select-roles.component';
 import { BoardMemberService } from '../../services/board-member-service/board-member.service';
 import { RoleCard } from '../../shared/model/roles/role.model';
 import { BoardMemberResponce } from '../../shared/model/board-members/member-responce.model';
 import { AlertService } from '../../services/alert-service/alert.service';
-import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { BoardMember } from '../../shared/model/board-members/board-member.model';
 
 @Component({
   selector: 'app-member-page',
-  imports: [MainMenuComponent, SelectRolesComponent,
+  imports: [ SelectRolesComponent,
    TuiButton, TuiIcon, TuiScrollbar,
    FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './member-page.component.html',
@@ -66,7 +64,7 @@ export class MemberPageComponent implements OnInit {
          .subscribe(
             (result: BoardMemberResponce) => {
                if (result.status == 'ok') {
-                  this.router.navigate(['/members', this.boardId]);
+                  this.router.navigate(['/main/members', this.boardId]);
                } else {
                   var errorText: string | undefined;
                   if (result.error) {
@@ -88,7 +86,7 @@ export class MemberPageComponent implements OnInit {
          .subscribe(
             (result: BoardMemberResponce) => {
                if (result.status == 'ok') {
-                  this.router.navigate(['/members', this.boardId]);
+                  this.router.navigate(['/main/members', this.boardId]);
                } else {
                   var errorText: string | undefined;
                   if (result.error) {
